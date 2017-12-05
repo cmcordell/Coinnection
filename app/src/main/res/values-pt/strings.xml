@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CryptoTracker</string>
+    <string name="rank_header">Classificação:</string>
+    <string name="market_cap_header">Cap mercado:</string>
+    <string name="nav_option_market">Mercado</string>
+    <string name="volume_twenty_four_hour_header">Volume 24h:</string>
+    <string name="twenty_four_hour_abbreviation_label">24h:</string>
+    <string name="available_supply_header">Oferta disponível:</string>
+    <string name="name_header">Nome</string>
+    <string name="price_header">Preço:</string>
+    <string name="edit">Editar</string>
+    <string name="action_search">Buscar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add">Adicionar</string>
+    <string name="action_settings">Configurações</string>
+    <string name="nav_option_settings">Configurações</string>
+    <string name="title_settings">Configurações</string>
+    <string name="search_hint">Buscar</string>
+    <string name="pref_currency">Moeda nativa</string>
+    <string name="app_version">Versão do aplicativo:</string>
+    <string name="balance_header">Saldo</string>
+</resources>

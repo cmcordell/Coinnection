@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_asset_info">
+        <item>@string/price_header</item>
+        <item>@string/percent_change_header</item>
+        <item>@string/market_value_header</item>
+    </string-array>
+    <string-array name="spinner_all_assets_info">
+        <item>@string/price_header</item>
+        <item>@string/percent_change_1h_short</item>
+        <item>@string/percent_change_24h_short</item>
+        <item>@string/percent_change_7d_short</item>
+        <item>@string/market_cap_header</item>
+        <item>@string/volume_twenty_four_hour_header</item>
+        <item>@string/available_supply_header</item>
+        <item>@string/name_header</item>
+    </string-array>
+
+    <string-array name="pref_currency_entries">
+        <item>@string/currency_aud</item>
+        <item>@string/currency_brl</item>
+        <item>@string/currency_cad</item>
+        <item>@string/currency_chf</item>
+        <item>@string/currency_cny</item>
+        <item>@string/currency_eur</item>
+        <item>@string/currency_gbp</item>
+        <item>@string/currency_hkd</item>
+        <item>@string/currency_idr</item>
+        <item>@string/currency_inr</item>
+        <item>@string/currency_jpy</item>
+        <item>@string/currency_krw</item>
+        <item>@string/currency_mxn</item>
+        <item>@string/currency_rub</item>
+        <item>@string/currency_usd</item>
+    </string-array>
+    <string-array name="pref_currency_values">
+        <item>aud</item>
+        <item>brl</item>
+        <item>cad</item>
+        <item>chf</item>
+        <item>cny</item>
+        <item>eur</item>
+        <item>gbp</item>
+        <item>hkd</item>
+        <item>idr</item>
+        <item>inr</item>
+        <item>jpy</item>
+        <item>krw</item>
+        <item>mxn</item>
+        <item>rub</item>
+        <item>usd</item>
+    </string-array>
+
+    <string-array name="pref_app_theme_entries">
+        <item>@string/app_theme_light</item>
+        <item>@string/app_theme_dark</item>
+    </string-array>
+    <string-array name="pref_app_theme_values">
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="pref_data_refresh_entries">
+        <item>Every Day</item>
+        <item>Every 2 Days</item>
+        <item>Every 3 Days</item>
+        <item>Every Week</item>
+        <item>Every Month</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_data_refresh_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>7</item>
+        <item>30</item>
+        <item>0</item>
+    </string-array>
+    
+    <string-array name="donation_wallet_names">
+        <item>@string/wallet_name_bitcoin</item>
+        <item>@string/wallet_name_bitcoin_cash</item>
+        <item>@string/wallet_name_dash</item>
+        <item>@string/wallet_name_dogecoin</item>
+        <item>@string/wallet_name_eth_classic</item>
+        <item>@string/wallet_name_ethereum</item>
+        <item>@string/wallet_name_litecoin</item>
+        <item>@string/wallet_name_zcash</item>
+    </string-array>
+    <string-array name="donation_wallet_addresses">
+        <item>@string/wallet_address_bitcoin</item>
+        <item>@string/wallet_address_bitcoin_cash</item>
+        <item>@string/wallet_address_dash</item>
+        <item>@string/wallet_address_dogecoin</item>
+        <item>@string/wallet_address_eth_classic</item>
+        <item>@string/wallet_address_ethereum</item>
+        <item>@string/wallet_address_litecoin</item>
+        <item>@string/wallet_address_zcash</item>
+    </string-array>
+    <integer-array name="donation_wallet_icons">
+        <item>@drawable/ic_asset_bitcoin</item>
+        <item>@drawable/ic_asset_bitcoin_cash</item>
+        <item>@drawable/ic_asset_dash</item>
+        <item>@drawable/ic_asset_dogecoin</item>
+        <item>@drawable/ic_asset_eth_classic</item>
+        <item>@drawable/ic_asset_ethereum</item>
+        <item>@drawable/ic_asset_litecoin</item>
+        <item>@drawable/ic_asset_zcash</item>
+    </integer-array>
+    <integer-array name="donation_wallet_qrcodes">
+        <item>@drawable/wallet_address_qrcode_bitcoin</item>
+        <item>@drawable/wallet_address_qrcode_bitcoin_cash</item>
+        <item>@drawable/wallet_address_qrcode_dash</item>
+        <item>@drawable/wallet_address_qrcode_dogecoin</item>
+        <item>@drawable/wallet_address_qrcode_eth_classic</item>
+        <item>@drawable/wallet_address_qrcode_ethereum</item>
+        <item>@drawable/wallet_address_qrcode_litecoin</item>
+        <item>@drawable/wallet_address_qrcode_zcash</item>
+    </integer-array>
+</resources>

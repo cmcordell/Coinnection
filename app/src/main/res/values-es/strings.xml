@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CryptoTracker</string>
+    <string name="title_portfolio">Cartera</string>
+    <string name="title_market">Mercado</string>
+    <string name="title_settings">Configuracións</string>
+    <string name="title_about">Sobre</string>
+    <string name="action_search">Buscar</string>
+    <string name="search_hint">Buscar</string>
+    <string name="name_header">Nombre:</string>
+    <string name="pref_currency">Moneda local</string>
+    <string name="information_header">Información</string>
+    <string name="all_tab_title">Todo</string>
+    <string name="add">Añadir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="nav_option_settings">Configuracións</string>
+    <string name="nav_option_portfolio">Cartera</string>
+    <string name="price_header">Precio</string>
+    <string name="nav_option_market">Mercado</string>
+    <string name="action_settings">Configuracións</string>
+    <string name="available_supply_header">Suministro disponible:</string>
+    <string name="rank_header">Clasificación:</string>
+    <string name="twenty_four_hour_abbreviation_label">24h:</string>
+    <string name="total_supply_header">Suministro Total:</string>
+    <string name="action_favorite">Favorito</string>
+    <string name="favorites_tab_title">Favoritos</string>
+    <string name="balance_header">Balance:</string>
+    <string name="news_header">Noticias</string>
+    <string name="nav_option_about">Sobre</string>
+    <string name="add_balance">Añadir Balance</string>
+    <string name="action_add_balance">Añadir Balance</string>
+    <string name="action_edit_balance">Editar Balance</string>
+    <string name="edit_balance">Editar Balance</string>
+    <string name="edit">Editar</string>
+    <string name="action_remove_balance">Quitar Balance</string>
+    <string name="navigation_header">Navegación</string>
+    <string name="navigation_drawer_open">Abrir el navigation drawer</string>
+    <string name="navigation_drawer_close">Cerrar el navigation drawer</string>
+    <string name="pref_portfolio_list_layout">Disposición de lista de cartera</string>
+    <string name="pref_favorites_list_layout">Disposición de lista de favoritos</string>
+    <string name="no_cryptos_text">Actualmente no tiene criptocurrencias en su cartera.
+        Haga clic en el botón agregar en la parte inferior de la pantalla para agregar una criptocurrencia.
+    </string>
+    <string name="no_favorites_text">No has favorecido ninguna criptocurrencia.
+        Haga clic en una criptocurrencia y toque el botón favorito en la parte superior de la pantalla a su favorito.
+    </string>
+    <string name="pref_currency_summary">Seleccione la moneda que debe utilizarse para mostrar los precios.</string>
+    <string name="pref_portfolio_list_layout_summary">Seleccione cómo se mostrarán las criptocurrencias en su cartera.</string>
+    <string name="pref_favorites_list_layout_summary">Seleccione cómo se mostrarán las criptomonedas en la pestaña de favoritos.</string>
+    <string name="app_version">Versión de la aplicación:</string>
+    <string name="market_cap_header">Cap del mercado</string>
+    <string name="volume_twenty_four_hour_header">Volumen de 24h</string>
+    <string name="total_balance_header">Balance Total:</string>
+    <string name="seven_day_abbreviation_label">7d:</string>
+</resources>

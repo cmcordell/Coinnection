@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="personal.calebcordell.coinnection.widgets.cryptocurrencyinfo.WidgetStylePickerFragment">
+
+    <ListView
+        android:id="@+id/style_picker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/next_button"
+        android:choiceMode="singleChoice"
+        android:paddingTop="4dp"
+        android:listSelector="@color/cardview_shadow_start_color"/>
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:text="Next"
+        android:textColor="@color/colorTextWhitePrimary"
+        android:visibility="gone"/>
+</RelativeLayout>

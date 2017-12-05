@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CryptoTracker</string>
+    <string name="rank_header">等级:</string>
+    <string name="volume_twenty_four_hour_header">24小时交易量:</string>
+    <string name="available_supply_header">现货供应:</string>
+    <string name="name_header">币名</string>
+    <string name="price_header">价格:</string>
+    <string name="action_search">搜索</string>
+    <string name="search_hint">搜索</string>
+    <string name="add">添加</string>
+    <string name="action_settings">设置</string>
+    <string name="nav_option_settings">设置</string>
+    <string name="title_settings">设置</string>
+    <string name="edit">编辑</string>
+    <string name="cancel">取消</string>
+    <string name="balance_header">余额</string>
+    <string name="app_version">应用版本:</string>
+    <string name="pref_currency">本地货币</string>
+    <string name="market_cap_header">市值</string>
+</resources>

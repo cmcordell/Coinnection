@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CoinnectionLightTheme">
+        <attr name="colorCardBackground" format="reference|color" />
+        <attr name="colorGraphFill" format="reference|color"/>
+        <attr name="colorGraphLine" format="reference|color"/>
+        <attr name="colorOverlayBackground" format="reference|color" />
+        <attr name="colorRippleBackground" format="reference|color" />
+        <attr name="colorTextOverColorPrimary" format="reference|color" />
+        <attr name="colorTextOverColorSecondary" format="reference|color" />
+        <attr name="colorTextOverColorDisableHint" format="reference|color" />
+        <attr name="colorTextOverBackgroundPrimary" format="reference|color" />
+        <attr name="colorTextOverBackgroundSecondary" format="reference|color" />
+        <attr name="colorTextOverBackgroundDisableHint" format="reference|color" />
+        <attr name="cardStyle" format="reference|integer" />
+        <attr name="drawableDocumentOverBackground" format="reference|integer" />
+        <attr name="drawableDonationOverBackground" format="reference|integer" />
+        <attr name="drawableFavoriteBorderOverBackground" format="reference|integer" />
+        <attr name="drawableFavoriteOverBackground" format="reference|integer" />
+        <attr name="drawableInfoOverBackground" format="reference|integer" />
+        <attr name="drawableLinkOverBackground" format="reference|integer" />
+        <attr name="drawableMailOverBackground" format="reference|integer" />
+        <attr name="drawableSortDirectionOverBackground" format="reference|integer" />
+        <attr name="drawableStarOverBackground" format="reference|integer" />
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:clickable="true"
+    android:elevation="2dp"
+    android:focusable="true"
+    android:foreground="@drawable/card_view_ripple_background"
+    app:cardCornerRadius="0dp"
+    style="?cardStyle">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="center_vertical">
+        
+        <ImageView
+            android:id="@+id/asset_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp" />
+
+        <TextView
+            android:id="@+id/asset_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/asset_logo"
+            android:layout_toStartOf="@+id/asset_info_field"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?colorTextOverBackgroundPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/asset_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/asset_name"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/asset_logo"
+            android:layout_toStartOf="@+id/asset_info_field"
+            android:maxLines="1"
+            android:textColor="?colorTextOverBackgroundSecondary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/asset_info_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/asset_logo"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="?colorTextOverBackgroundSecondary"
+            android:textSize="20sp"
+            android:layout_alignBottom="@+id/asset_logo" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

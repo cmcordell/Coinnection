@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CryptoTracker</string>
+    <string name="rank_header">순위 :</string>
+    <string name="market_cap_header">시가 총액 :</string>
+    <string name="volume_twenty_four_hour_header">24시간 거래량 :</string>
+    <string name="available_supply_header">가용 공급량 :</string>
+    <string name="name_header">이름</string>
+    <string name="price_header">가격 :</string>
+    <string name="action_settings">설정</string>
+    <string name="nav_option_settings">설정</string>
+    <string name="title_settings">설정</string>
+    <string name="edit">편집</string>
+    <string name="action_search">검색</string>
+    <string name="search_hint">검색</string>
+    <string name="cancel">취소</string>
+    <string name="add">추가</string>
+    <string name="balance_header">잔액</string>
+    <string name="app_version">앱 버전 :</string>
+    <string name="pref_currency">기본 통화</string>
+</resources>

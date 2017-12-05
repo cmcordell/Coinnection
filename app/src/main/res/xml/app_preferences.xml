@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Account">
+
+        <ListPreference
+            android:key="pref_currency"
+            android:title="@string/pref_currency"
+            android:dialogTitle="@string/pref_currency"
+            android:summary="@string/pref_currency_summary"
+            android:entries="@array/pref_currency_entries"
+            android:entryValues="@array/pref_currency_values"
+            android:defaultValue="@string/pref_currency_default" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:title="UI Customization">
+
+        <ListPreference
+            android:key="pref_app_theme"
+            android:title="@string/pref_app_theme"
+            android:dialogTitle="@string/pref_app_theme"
+            android:summary="@string/pref_app_theme"
+            android:entries="@array/pref_app_theme_entries"
+            android:entryValues="@array/pref_app_theme_values"
+            android:defaultValue="@string/pref_app_theme_default" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Data">
+
+        <ListPreference
+            android:key="pref_data_refresh"
+            android:title="@string/pref_data_refresh"
+            android:dialogTitle="@string/pref_data_refresh"
+            android:summary="@string/pref_data_refresh_summary"
+            android:entries="@array/pref_data_refresh_entries"
+            android:entryValues="@array/pref_data_refresh_values"
+            android:defaultValue="@string/pref_data_refresh_default" />
+
+        <Preference
+            android:key="pref_force_update"
+            android:title="@string/pref_force_update" />
+    </PreferenceCategory>
+</PreferenceScreen>

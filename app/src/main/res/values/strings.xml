@@ -1,0 +1,180 @@
+<resources>
+    <string name="app_name">Coinnection</string>
+
+    <string name="app_version">App Version:</string>
+    <string name="app_email" translatable="false">coinnection.app@gmail.com</string>
+    <string name="email_subject" translatable="false">Coinnection Feedback</string>
+
+    <string name="initializing_text">Initializing app for the first time&#8230;</string>
+    <string name="initial_load_network_error_text">Network Error, please close app and reopen when you have an internet connection.</string>
+
+    <string name="title_portfolio">Portfolio</string>
+    <string name="title_all_assets">All Assets</string>
+    <string name="title_market">Market</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_about">About</string>
+    <string name="title_donate">Donate</string>
+    <string name="title_licenses">Licenses</string>
+
+    <string name="title_force_update">Force Update?</string>
+    <string name="title_remove_portfolio_asset">Remove</string>
+    <string name="title_widget_style_picker">Pick a style&#8230;</string>
+    <string name="title_widget_cryptocurrency_picker">Pick an asset&#8230;</string>
+
+    <string name="search_hint">Search assets&#8230;</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_option_portfolio">Portfolio</string>
+    <string name="nav_option_market">Market</string>
+    <string name="nav_option_settings">Settings</string>
+    <string name="nav_option_about">About</string>
+
+    <string name="action_favorite">Favorite</string>
+    <string name="action_add_balance">Add Balance</string>
+    <string name="action_edit_balance">Edit Balance</string>
+    <string name="action_remove_balance">Remove Balance</string>
+    <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="add">Add</string>
+    <string name="add_balance">Add Balance</string>
+    <string name="edit">Edit</string>
+    <string name="edit_balance">Edit Balance</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
+    <string name="copy">Copy</string>
+    <string name="email">Email</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="donate">Donate</string>
+
+    <string name="rank_header">Rank</string>
+    <string name="available_supply_header">Available Supply</string>
+    <string name="total_supply_header">Total Supply</string>
+    <string name="capitalization_header">Capitalization</string>
+    <string name="market_value_header">Market Value</string>
+    <string name="amount_header">Amount</string>
+    <string name="total_balance_header">Total Balance</string>
+    <string name="balance_header">Balance</string>
+    <string name="information_header">Information</string>
+    <string name="news_header">News</string>
+    <string name="name_header">Name</string>
+    <string name="price_header">Price</string>
+    <string name="navigation_header">Navigation</string>
+    <string name="market_cap_header">Market Cap</string>
+    <string name="percent_change_header">Percent Change</string>
+    <string name="volume_twenty_four_hour_header">24h Volume</string>
+    <string name="last_updated_label">Last Updated:</string>
+
+    <string name="percent_change_1h_short">% Change 1H</string>
+    <string name="percent_change_24h_short">% Change 24H</string>
+    <string name="percent_change_7d_short">% Change 7D</string>
+
+
+    <string name="one_hour_change_text">Past Hour</string>
+    <string name="one_day_change_text">Past Day</string>
+    <string name="one_week_change_text">Past Week</string>
+
+    <string name="one_hour_abbreviation_label">1h</string>
+    <string name="twenty_four_hour_abbreviation_label">24h</string>
+    <string name="seven_day_abbreviation_label">7d</string>
+
+    <string name="hour_abbreviation">h</string>
+    <string name="day_abbreviation">d</string>
+    <string name="week_abbreviation">w</string>
+
+    <string name="thousand_abbreviation">k</string>
+    <string name="million_abbreviation">M</string>
+    <string name="billion_abbreviation">B</string>
+    <string name="trillion_abbreviation">T</string>
+
+    <string name="favorites_tab_title">Favorites</string>
+    <string name="all_tab_title">All</string>
+
+    <string name="asset_section_title">Assets</string>
+    <string name="asset_section_empty_text">Add assets to your portfolio.  Get started by tapping on the search icon in the top right corner of the screen.</string>
+    <string name="watchlist_section_title">Watchlist</string>
+    <string name="watchlist_section_empty_text">Add assets to your watchlist.  Get started by tapping on the search icon in the top right corner of the screen.</string>
+    <string name="balance_section_title">Balance</string>
+    <string name="statistics_section_title">Statistics</string>
+
+    <string name="no_cryptos_text">You currently have no cryptocurrencies in your portfolio.
+        Please click the add button at the top of the screen to add a asset.
+    </string>
+    <string name="no_favorites_text">You haven\'t favorited any cryptocurrencies.
+        Please click on a asset and tap the favorite button at the top of the screen to favorite.
+    </string>
+    <string name="force_update_text">
+        It is recommended to have a good data connection before starting an update.
+    </string>
+    <string name="remove_portfolio_asset_text">
+        Are you sure you want to remove this asset from your portfolio?
+    </string>
+    <string name="donation_header_text">
+        Donations are appreciated!\nTap an item to view in more detail
+    </string>
+
+    <string name="created_by_text">Created By Caleb Cordell</string>
+    <string name="support_email_text">Support/feedback email</string>
+    <string name="app_review_text">Rate this app</string>
+    <string name="coin_market_cap_text">All data from CoinMarketCap.com</string>
+    <string name="coin_market_cap_url">https://www.coinmarketcap.com</string>
+    <string name="erc20_link_text">List of erc20 tokens</string>
+    <string name="erc20_link_url">https://etherscan.io/tokens</string>
+
+    <string name="pref_currency">Local Currency</string>
+    <string name="pref_currency_summary">Select which currency should be used to display prices.</string>
+    <string name="pref_currency_default" translatable="false">usd</string>
+    <string name="currency_aud">AUD - $ Australia Dollar</string>
+    <string name="currency_brl">BRL - $ Brazil Real</string>
+    <string name="currency_cad">CAD - $ Canada Dollar</string>
+    <string name="currency_chf">CHF - CHF Switzerland Franc</string>
+    <string name="currency_cny">CNY - ¥ China Yuan/Renminbi</string>
+    <string name="currency_eur">EUR - € Euro</string>
+    <string name="currency_gbp">GBP - £ Great Britain Pound</string>
+    <string name="currency_hkd">HKD - $ Hong Kong Dollar</string>
+    <string name="currency_idr">IDR - Rp Indonesia Rupiah</string>
+    <string name="currency_inr">INR - ₹ India Rupee</string>
+    <string name="currency_jpy">JPY - ¥ Japan Yen</string>
+    <string name="currency_krw">KRW - ₩ South Korea Won</string>
+    <string name="currency_mxn">MXN - $ Mexico Peso</string>
+    <string name="currency_rub">RUB - ₽ Russia Rouble</string>
+    <string name="currency_usd">USD - $ United States Dollar</string>
+
+    <string name="pref_app_theme">App Theme</string>
+    <string name="pref_app_theme_summary">Choose how the Coinnection looks.</string>
+    <string name="pref_app_theme_default" translatable="false">light</string>
+    <string name="app_theme_light">Light</string>
+    <string name="app_theme_dark">Dark</string>
+
+    <string name="pref_data_refresh">Full Update Time</string>
+    <string name="pref_data_refresh_summary">Select how often to do a full update.  This is used to add new cryptocurrencies as they become available.</string>
+    <string name="pref_data_refresh_default" translatable="false">2</string>
+
+    <string name="pref_force_update">Force Update</string>
+
+    <string name="widget_cryptocurrency_info_1x1_label">Price</string>
+    <string name="widget_cryptocurrency_info_2x1_label">Price</string>
+    <string name="widget_cryptocurrency_multiple_info_label">Price Multiple</string>
+
+    <string name="wallet_name_bitcoin">Bitcoin</string>
+    <string name="wallet_address_bitcoin">1CrLnp97zRoNiE8UCm5V46wzzcXseE1s2E</string>
+    <string name="wallet_name_bitcoin_cash">Bitcoin Cash</string>
+    <string name="wallet_address_bitcoin_cash">15K1YVgyVpMrGLTZLtHa8JbfV7AQnwwyMv</string>
+    <string name="wallet_name_dash">Dash</string>
+    <string name="wallet_address_dash">XfaSwwPd5F2vPme4CPYEKw5hMSUaLWbsH8</string>
+    <string name="wallet_name_decred">Decred</string>
+    <string name="wallet_address_decred">Dshh9jhFVVCaMqx9BCrRjQdHTqn7FtfWiGv</string>
+    <string name="wallet_name_dogecoin">Dogecoin</string>
+    <string name="wallet_address_dogecoin">DCXTjurPxd5sxCvwHGFijyvf6Fcyw3g8tu</string>
+    <string name="wallet_name_eth_classic">Ethereum Classic</string>
+    <string name="wallet_address_eth_classic">0x88a1e6ff18d2ecb02e601fe46e075cb9e657413b</string>
+    <string name="wallet_name_ethereum">Ethereum + any erc20 token</string>
+    <string name="wallet_address_ethereum">0xbe54a642fce71a1484f634b257cf5748146fe5ec</string>
+    <string name="wallet_name_litecoin">Litecoin</string>
+    <string name="wallet_address_litecoin">LW2KMe6Q3rW7PLqLqWVHSMQbJvd1ryFUwC</string>
+    <string name="wallet_name_zcash">Zcash</string>
+    <string name="wallet_address_zcash">t1QNcmhNW9Mrngb13Yb77AQqertNKpBsLqW</string>
+</resources>

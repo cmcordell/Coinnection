@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CryptoTracker</string>
+    <string name="rank_header">Рейтинги:</string>
+    <string name="volume_twenty_four_hour_header">Суточный объем:</string>
+    <string name="available_supply_header">Доступные ресурсы:</string>
+    <string name="name_header">Имя</string>
+    <string name="price_header">Стоимость:</string>
+    <string name="action_search">Поиск</string>
+    <string name="search_hint">Поиск</string>
+    <string name="add">Добавить</string>
+    <string name="action_settings">Настройки</string>
+    <string name="nav_option_settings">Настройки</string>
+    <string name="title_settings">Настройки</string>
+    <string name="edit">Изменить</string>
+    <string name="cancel">Отменить</string>
+    <string name="pref_currency">Национальная валюта</string>
+    <string name="balance_header">Баланс:</string>
+    <string name="app_version">Версия приложения</string>
+    <string name="market_cap_header">Рыночная капитализация</string>
+</resources>
