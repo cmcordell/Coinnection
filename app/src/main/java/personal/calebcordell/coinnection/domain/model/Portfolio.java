@@ -22,6 +22,7 @@ public class Portfolio {
     public String getId() {
         return id;
     }
+
     public void setId(@NonNull String id) {
         this.id = id;
     }
@@ -29,6 +30,7 @@ public class Portfolio {
     public String getName() {
         return name;
     }
+
     public void setName(String newName) {
         name = newName;
     }

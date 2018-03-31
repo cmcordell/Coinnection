@@ -1,59 +1,90 @@
 package personal.calebcordell.coinnection.presentation.views.assetdetailtab;
 
-import io.reactivex.disposables.CompositeDisposable;
+import android.support.annotation.NonNull;
+
+import javax.inject.Inject;
+
 import io.reactivex.observers.DisposableCompletableObserver;
-import personal.calebcordell.coinnection.domain.interactor.impl.AddAssetToPortfolioInteractor;
-import personal.calebcordell.coinnection.domain.interactor.impl.RemoveAssetFromPortfolioInteractor;
+import personal.calebcordell.coinnection.domain.interactor.impl.portfolioassetinteractors.AddAssetToPortfolioInteractor;
+import personal.calebcordell.coinnection.domain.interactor.impl.portfolioassetinteractors.RemoveAssetFromPortfolioInteractor;
 import personal.calebcordell.coinnection.domain.model.Asset;
 import personal.calebcordell.coinnection.domain.model.PortfolioAsset;
 
 
-class AssetDetailTabPresenter implements AssetDetailTabContract.Presenter {
+class AssetDetailTabPresenter extends AssetDetailTabContract.Presenter {
     private static final String TAG = AssetDetailTabPresenter.class.getSimpleName();
-
-    private AssetDetailTabContract.View mView;
 
     private AddAssetToPortfolioInteractor mAddAssetToPortfolioInteractor;
     private RemoveAssetFromPortfolioInteractor mRemoveAssetFromPortfolioInteractor;
 
-    private CompositeDisposable mCompositeDisposable;
+    private Asset mAsset;
 
-    AssetDetailTabPresenter(AssetDetailTabContract.View view) {
-        mView = view;
-
-        mAddAssetToPortfolioInteractor = new AddAssetToPortfolioInteractor();
-        mRemoveAssetFromPortfolioInteractor = new RemoveAssetFromPortfolioInteractor();
-
-        mCompositeDisposable = new CompositeDisposable();
+    @Inject
+    AssetDetailTabPresenter(AddAssetToPortfolioInteractor addAssetToPortfolioInteractor,
+                            RemoveAssetFromPortfolioInteractor removeAssetFromPortfolioInteractor) {
+        mAddAssetToPortfolioInteractor = addAssetToPortfolioInteractor;
+        mRemoveAssetFromPortfolioInteractor = removeAssetFromPortfolioInteractor;
     }
 
-    public void start(final String assetId) {
-
+    @Override
+    public void setAsset(@NonNull Asset asset) {
+        mAsset = asset;
     }
 
-    public void addAssetToPortfolio(final Asset asset, final double balance) {
-        final PortfolioAsset portfolioAsset = new PortfolioAsset(asset, balance);
-        mCompositeDisposable.add(mAddAssetToPortfolioInteractor.execute(portfolioAsset, new DisposableCompletableObserver() {
-            @Override public void onComplete() {}
-            @Override public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-        }));
-    }
-    public void removeAssetFromPortfolio(final String assetId) {
-        mCompositeDisposable.add(mRemoveAssetFromPortfolioInteractor.execute(assetId, new DisposableCompletableObserver() {
-            @Override public void onComplete() {}
-            @Override public void onError(Throwable e) {
-                e.printStackTrace();
-            }
-        }));
+    @Override
+    public void initialize() {
+        if (mAsset == null) {
+            throw new RuntimeException("Asset must be set before calling start()");
+        } else {
+            mView.showAsset(mAsset);
+        }
     }
 
-    public void fragmentBecameInvisible() {
-
+    @Override
+    public void onEditPortfolioAssetClicked() {
+        mView.openEditPortfolioAssetUI(mAsset);
+    }
+    @Override
+    public void onAddAssetToPortfolioClicked() {
+        mView.openAddPortfolioAssetUI(mAsset);
+    }
+    @Override
+    public void onRemoveAssetFromPortfolioClicked() {
+        mView.openRemovePortfolioAssetUI();
     }
 
-    public void destroy() {
-        mCompositeDisposable.dispose();
+    @Override
+    public void editAssetBalance(double balance) {
+        final PortfolioAsset portfolioAsset = new PortfolioAsset(mAsset, balance);
+        mAddAssetToPortfolioInteractor.execute(portfolioAsset, new DisposableCompletableObserver() {
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onError(Throwable e) {}
+        });
+    }
+
+    @Override
+    public void addAssetToPortfolio(final double balance) {
+        final PortfolioAsset portfolioAsset = new PortfolioAsset(mAsset, balance);
+        mAddAssetToPortfolioInteractor.execute(portfolioAsset, new DisposableCompletableObserver() {
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onError(Throwable e) {}
+        });
+    }
+
+    @Override
+    public void removeAssetFromPortfolio() {
+        mRemoveAssetFromPortfolioInteractor.execute(mAsset.getId(), new DisposableCompletableObserver() {
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onError(Throwable e) {}
+        });
     }
 }

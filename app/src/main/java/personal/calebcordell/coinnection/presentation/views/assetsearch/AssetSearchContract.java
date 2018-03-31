@@ -1,27 +1,27 @@
 package personal.calebcordell.coinnection.presentation.views.assetsearch;
 
-import personal.calebcordell.coinnection.domain.model.Asset;
+import android.support.annotation.NonNull;
 
 import java.util.List;
+
+import personal.calebcordell.coinnection.domain.model.Asset;
+import personal.calebcordell.coinnection.presentation.views.base.BasePresenter;
 
 
 interface AssetSearchContract {
     interface View {
-        void setAssets(List<Asset> assets);
+        void setAssets(@NonNull List<Asset> assets);
 
-        void setPortfolioAssetIds(List<String> portfolioAssetIds);
-        void setWatchlistAssetIds(List<String> watchlistAssetIds);
+        void setPortfolioAssetIds(@NonNull List<String> portfolioAssetIds);
 
-        void openAssetDetailUI(Asset asset);
+        void setWatchlistAssetIds(@NonNull List<String> watchlistAssetIds);
+
+        void openAssetDetailUI(@NonNull Asset asset);
     }
 
-    interface Presenter {
-        void start();
+    abstract class Presenter extends BasePresenter<View> {
+        abstract void onAssetSelected(@NonNull Asset asset);
 
-        void onAssetSelected(Asset asset);
-
-        void onAssetFavoriteClicked(Asset asset, boolean isOnWatchlist);
-
-        void destroy();
+        abstract void onAssetFavoriteClicked(@NonNull Asset asset, boolean isOnWatchlist);
     }
 }

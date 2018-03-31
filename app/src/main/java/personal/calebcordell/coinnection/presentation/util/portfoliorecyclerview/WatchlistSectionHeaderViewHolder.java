@@ -14,9 +14,12 @@ import personal.calebcordell.coinnection.presentation.util.SimpleSpinnerAdapter;
 
 public class WatchlistSectionHeaderViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.list_empty_text) TextView mListEmptyTextView;
-    @BindView(R.id.section_title) TextView mSectionTitleTextView;
-    @BindView(R.id.asset_info_spinner) Spinner mAssetInfoSpinner;
+    @BindView(R.id.list_empty_text)
+    TextView mListEmptyTextView;
+    @BindView(R.id.section_title)
+    TextView mSectionTitleTextView;
+    @BindView(R.id.asset_info_spinner)
+    Spinner mAssetInfoSpinner;
 
     private AdapterView.OnItemSelectedListener mOnItemSelectedListener;
 
@@ -32,12 +35,12 @@ public class WatchlistSectionHeaderViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final int watchlistListSize, final AdapterView.OnItemSelectedListener onItemSelectedListener, final int assetInfoShown) {
-        if(watchlistListSize > 0) {
+        if (watchlistListSize > 0) {
             mListEmptyTextView.setVisibility(View.GONE);
             mSectionTitleTextView.setVisibility(View.VISIBLE);
             mAssetInfoSpinner.setVisibility(View.VISIBLE);
 
-            if(mOnItemSelectedListener == null) {
+            if (mOnItemSelectedListener == null) {
                 mAssetInfoSpinner.setOnItemSelectedListener(onItemSelectedListener);
                 mOnItemSelectedListener = onItemSelectedListener;
             }

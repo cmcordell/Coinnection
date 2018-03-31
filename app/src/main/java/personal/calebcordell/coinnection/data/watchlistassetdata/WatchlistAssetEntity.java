@@ -54,6 +54,7 @@ public class WatchlistAssetEntity {
     public String getId() {
         return id;
     }
+
     public void setId(@NonNull String id) {
         this.id = id;
     }
@@ -61,6 +62,7 @@ public class WatchlistAssetEntity {
     public int getPosition() {
         return position;
     }
+
     public void setPosition(int position) {
         this.position = position;
     }
@@ -68,6 +70,7 @@ public class WatchlistAssetEntity {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -75,6 +78,7 @@ public class WatchlistAssetEntity {
     public String getSymbol() {
         return symbol;
     }
+
     public void setSymbol(String symbol) {
         this.symbol = symbol;
     }
@@ -82,6 +86,7 @@ public class WatchlistAssetEntity {
     public int getRank() {
         return rank;
     }
+
     public void setRank(int rank) {
         this.rank = rank;
     }
@@ -89,6 +94,7 @@ public class WatchlistAssetEntity {
     public double getPrice() {
         return price;
     }
+
     public void setPrice(double price) {
         this.price = price;
     }
@@ -96,6 +102,7 @@ public class WatchlistAssetEntity {
     public double getVolume24Hour() {
         return volume24Hour;
     }
+
     public void setVolume24Hour(double volume24Hour) {
         this.volume24Hour = volume24Hour;
     }
@@ -103,6 +110,7 @@ public class WatchlistAssetEntity {
     public double getMarketCap() {
         return marketCap;
     }
+
     public void setMarketCap(double marketCap) {
         this.marketCap = marketCap;
     }
@@ -110,6 +118,7 @@ public class WatchlistAssetEntity {
     public double getAvailableSupply() {
         return availableSupply;
     }
+
     public void setAvailableSupply(double availableSupply) {
         this.availableSupply = availableSupply;
     }
@@ -117,6 +126,7 @@ public class WatchlistAssetEntity {
     public double getTotalSupply() {
         return totalSupply;
     }
+
     public void setTotalSupply(double totalSupply) {
         this.totalSupply = totalSupply;
     }
@@ -124,6 +134,7 @@ public class WatchlistAssetEntity {
     public double getPercentChange1h() {
         return percentChange1h;
     }
+
     public void setPercentChange1h(double percentChange1h) {
         this.percentChange1h = percentChange1h;
     }
@@ -131,6 +142,7 @@ public class WatchlistAssetEntity {
     public double getPercentChange24h() {
         return percentChange24h;
     }
+
     public void setPercentChange24h(double percentChange24h) {
         this.percentChange24h = percentChange24h;
     }
@@ -138,6 +150,7 @@ public class WatchlistAssetEntity {
     public double getPercentChange7d() {
         return percentChange7d;
     }
+
     public void setPercentChange7d(double percentChange7d) {
         this.percentChange7d = percentChange7d;
     }
@@ -145,6 +158,7 @@ public class WatchlistAssetEntity {
     public long getLastUpdated() {
         return lastUpdated;
     }
+
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }

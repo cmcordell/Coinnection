@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="24dp"
     android:paddingEnd="24dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="8dp">
+    android:paddingTop="24dp"
+    android:paddingBottom="16dp">
 
     <ImageView
         android:id="@+id/donation_wallet_qrcode"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/donation_wallet_address"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/donation_wallet_qrcode"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:textColor="?colorTextOverBackgroundPrimary"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/donation_wallet_qrcode"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/erc20_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/donation_wallet_address"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:text="@string/erc20_link_text"
-        android:visibility="gone" />
-</RelativeLayout>
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/donation_wallet_address" />
+</android.support.constraint.ConstraintLayout>

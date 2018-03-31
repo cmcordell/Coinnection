@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 
-import java.math.RoundingMode;
-
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
@@ -39,7 +37,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         int right = parent.getWidth() - parent.getPaddingRight();
 
         int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount-1; i++) {
+        for (int i = 0; i < childCount - 1; i++) {
             View child = parent.getChildAt(i);
 
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();

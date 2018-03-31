@@ -1,10 +1,19 @@
 package personal.calebcordell.coinnection.data.watchlistassetdata;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import personal.calebcordell.coinnection.data.base.BaseMapper;
+import personal.calebcordell.coinnection.domain.model.LogoUtil;
 import personal.calebcordell.coinnection.domain.model.WatchlistAsset;
 
 
+@Singleton
 public class WatchlistAssetMapper extends BaseMapper<WatchlistAsset, WatchlistAssetEntity> {
+
+    @Inject
+    public WatchlistAssetMapper() {
+    }
 
     public WatchlistAsset mapUp(WatchlistAssetEntity entity) {
         WatchlistAsset watchlistAsset = new WatchlistAsset();
@@ -14,6 +23,7 @@ public class WatchlistAssetMapper extends BaseMapper<WatchlistAsset, WatchlistAs
         watchlistAsset.setName(entity.getName());
         watchlistAsset.setSymbol(entity.getSymbol());
         watchlistAsset.setRank(entity.getRank());
+        watchlistAsset.setLogo(LogoUtil.getLogo(entity.getId()));
         watchlistAsset.setPrice(entity.getPrice());
         watchlistAsset.setVolume24Hour(entity.getVolume24Hour());
         watchlistAsset.setMarketCap(entity.getMarketCap());

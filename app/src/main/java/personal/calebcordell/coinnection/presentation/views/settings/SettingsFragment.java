@@ -1,149 +1,133 @@
 package personal.calebcordell.coinnection.presentation.views.settings;
 
-import android.app.Fragment;
-import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
-
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.widget.Toast;
 
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 import personal.calebcordell.coinnection.R;
-import personal.calebcordell.coinnection.data.PreferencesRepositoryImpl;
-import personal.calebcordell.coinnection.domain.repository.PreferencesRepository;
-import personal.calebcordell.coinnection.presentation.App;
 import personal.calebcordell.coinnection.presentation.Constants;
-import personal.calebcordell.coinnection.presentation.Utils;
-import personal.calebcordell.coinnection.presentation.views.MainActivity;
-
-import butterknife.BindString;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import personal.calebcordell.coinnection.presentation.Preferences;
+import personal.calebcordell.coinnection.presentation.views.mainactivity.MainActivity;
 
 
-public class SettingsFragment extends PreferenceFragment implements SettingsContract.View {
+public class SettingsFragment extends PreferenceFragmentCompat implements SettingsContract.View {
 
-    private SettingsContract.Presenter mPresenter;
-    private MainActivity mActivity;
+    @Inject
+    protected SettingsContract.Presenter mPresenter;
+    @Inject
+    protected MainActivity mActivity;
+    @Inject
+    protected Preferences mPreferences;
 
-    @BindString(R.string.title_settings) protected String mSettingTitleString;
-    @BindString(R.string.title_force_update) protected String mForceUpdateTitleString;
-    @BindString(R.string.force_update_text) protected String mForceUpdateTextString;
+    private Toast mToast;
 
-    private Unbinder mUnbinder;
-
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
+    public SettingsFragment() {}
     public static Fragment newInstance() {
         return new SettingsFragment();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onAttach(Activity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            // Perform injection here before M, L (API 22) and below because onAttach(Context)
+            // is not yet available at L.
+            AndroidSupportInjection.inject(this);
+        }
+        super.onAttach(activity);
+    }
+    @Override
+    public void onAttach(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Perform injection here for M (API 23) due to deprecation of onAttach(Activity).
+            AndroidSupportInjection.inject(this);
+        }
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        // Load the preferences from an XML resource
+        setPreferencesFromResource(R.xml.app_preferences, rootKey);
+
+        mPresenter.setView(this);
+
+        setupPreferences();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mActivity.setTitle(mSettingTitleString);
+        mActivity.setTitle(getString(R.string.title_settings));
         mActivity.setSelectedFragment(null);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivity = (MainActivity) getActivity();
-        mPresenter = new SettingsPresenter(this);
-
-        addPreferencesFromResource(R.xml.app_preferences);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-
-        mUnbinder = ButterKnife.bind(this, view);
-
-        final PreferencesRepository preferencesRepository = PreferencesRepositoryImpl.getInstance();
-
-        ListPreference currencyPreference = (ListPreference) findPreference(Constants.KEY_CURRENCY);
-        currencyPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preferencesRepository.setCurrencyCode(newValue.toString());
-                Utils.updateCurrency();
-                mPresenter.onCurrencyPreferenceChanged();
-                return true;
-            }
-        });
-        currencyPreference.setValue(preferencesRepository.getCurrencyCode());
-
-
-        ListPreference appThemePreference = (ListPreference) findPreference(Constants.KEY_APP_THEME);
-        appThemePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preferencesRepository.setAppTheme(newValue.toString());
-                mActivity.recreate();
-                return true;
-            }
-        });
-        appThemePreference.setValue(preferencesRepository.getAppTheme());
-
-
-        ListPreference dataRefreshPreference = (ListPreference) findPreference(Constants.KEY_DATA_UPDATE);
-        dataRefreshPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preferencesRepository.setDataRefresh(newValue.toString());
-                return true;
-            }
-        });
-        dataRefreshPreference.setValue(String.valueOf(preferencesRepository.getDataRefresh()));
-
-
-        Preference forceUpdatePreference = findPreference(Constants.KEY_FORCE_UPDATE);
-        forceUpdatePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                mPresenter.onForceUpdatePreferenceClicked();
-                return true;
-            }
-        });
-
-        return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        mPresenter.destroy();
     }
 
     public void showForceUpdateDialog() {
         int[] attrs = {android.R.attr.alertDialogTheme};
-        TypedArray styles = App.getAppContext().obtainStyledAttributes(App.getApp().getAppTheme(), attrs);
+        TypedArray styles = mActivity.getApplication().obtainStyledAttributes(mPreferences.getAppThemeStyleAttr(), attrs);
         int alertDialogTheme = styles.getResourceId(0, R.style.CoinnectionTheme_Light_Dialog_Alert);
         styles.recycle();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, alertDialogTheme);
 
-        builder.setTitle(mForceUpdateTitleString)
-                .setMessage(mForceUpdateTextString)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        mPresenter.forceUpdate();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
+        builder.setTitle(getString(R.string.title_force_update))
+                .setMessage(R.string.force_update_text)
+                .setPositiveButton(R.string.yes, (dialog, id) -> mPresenter.forceUpdate())
+                .setNegativeButton(R.string.no, (dialog, id) -> {
                 })
                 .setCancelable(true)
                 .show();
+    }
+
+    public void showMessage(@NonNull final String message) {
+        if(mToast != null) {
+            mToast.cancel();
+        }
+        mToast = Toast.makeText(mActivity.getApplicationContext(), message, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+
+    private void setupPreferences() {
+        ListPreference currencyPreference = (ListPreference) findPreference(Constants.KEY_CURRENCY);
+        currencyPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            mPreferences.setCurrencyCode(newValue.toString());
+            mPresenter.onCurrencyPreferenceChanged();
+            return true;
+        });
+        currencyPreference.setValue(mPreferences.getCurrencyCode());
+
+
+        ListPreference appThemePreference = (ListPreference) findPreference(Constants.KEY_APP_THEME);
+        appThemePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            mPreferences.setAppTheme(newValue.toString());
+            mActivity.recreate();
+            return true;
+        });
+        appThemePreference.setValue(mPreferences.getAppTheme());
+
+
+        Preference forceUpdatePreference = findPreference(Constants.KEY_FORCE_UPDATE);
+        forceUpdatePreference.setOnPreferenceClickListener((preference) -> {
+            mPresenter.onForceUpdatePreferenceClicked();
+            return true;
+        });
     }
 }

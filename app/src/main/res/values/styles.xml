@@ -2,7 +2,8 @@
 
     <!-- Attributes shared by all Themes -->
     <style name="CoinnectionTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="autoCompleteTextViewStyle">@style/CoinnectionTheme.Base.Cursor</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
 
@@ -23,19 +24,23 @@
         <item name="colorTextOverBackgroundDisableHint">@color/colorTextBlackDisableHint</item>
         <item name="colorTextOverBackgroundPrimary">@color/colorTextBlackPrimary</item>
         <item name="colorTextOverBackgroundSecondary">@color/colorTextBlackSecondary</item>
+        <item name="drawableDonationOverBackground">@drawable/ic_donate_black</item>
         <item name="drawableFavoriteBorderOverBackground">@drawable/ic_favorite_border_black_24dp</item>
         <item name="drawableFavoriteOverBackground">@drawable/ic_favorite_black_24dp</item>
         <item name="drawableInfoOverBackground">@drawable/ic_info_black_24dp</item>
+        <item name="drawableLicenseOverBackground">@drawable/ic_license_black</item>
         <item name="drawableLinkOverBackground">@drawable/ic_link_black_24dp</item>
         <item name="drawableMailOverBackground">@drawable/ic_mail_black_24dp</item>
         <item name="drawableSortDirectionOverBackground">@drawable/ic_arrow_upward_black</item>
         <item name="drawableStarOverBackground">@drawable/ic_star_black_24dp</item>
 
+        <item name="alertDialogTheme">@style/CoinnectionTheme.Light.Dialog.Alert</item>
+        <item name="dialogTheme">@style/CoinnectionTheme.Light.Dialog</item>
         <item name="android:alertDialogTheme">@style/CoinnectionTheme.Light.Dialog.Alert</item>
         <item name="android:dialogTheme">@style/CoinnectionTheme.Light.Dialog</item>
         <item name="android:spinnerDropDownItemStyle">@style/CoinnectionTheme.Light.SpinnerDropDownItem</item>
         <item name="android:spinnerItemStyle">@style/CoinnectionTheme.Light.SpinnerItem</item>
-        <!--<item name="android:spinnerStyle">@style/CoinnectionTheme.Light.Spinner</item>-->
+        <item name="android:spinnerStyle">@style/CoinnectionTheme.Light.Spinner</item>
         <item name="android:windowBackground">@color/colorBackgroundLight</item>
     </style>
 
@@ -54,20 +59,27 @@
         <item name="colorTextOverBackgroundDisableHint">@color/colorTextWhiteDisableHint</item>
         <item name="colorTextOverBackgroundPrimary">@color/colorTextWhitePrimary</item>
         <item name="colorTextOverBackgroundSecondary">@color/colorTextWhiteSecondary</item>
-        <item name="drawableFavoriteBorderOverBackground">@drawable/ic_favorite_border_white_24dp</item>
+        <item name="drawableDonationOverBackground">@drawable/ic_donate_white</item>
+        <item name="drawableFavoriteBorderOverBackground">@drawable/ic_favorite_border_white_24dp
+        </item>
         <item name="drawableFavoriteOverBackground">@drawable/ic_favorite_white_24dp</item>
         <item name="drawableInfoOverBackground">@drawable/ic_info_white_24dp</item>
+        <item name="drawableLicenseOverBackground">@drawable/ic_license_white</item>
         <item name="drawableLinkOverBackground">@drawable/ic_link_white_24dp</item>
         <item name="drawableMailOverBackground">@drawable/ic_mail_white_24dp</item>
         <item name="drawableSortDirectionOverBackground">@drawable/ic_arrow_upward_white</item>
         <item name="drawableStarOverBackground">@drawable/ic_star_white_24dp</item>
 
+        <item name="alertDialogTheme">@style/CoinnectionTheme.Dark.Dialog.Alert</item>
+        <item name="dialogTheme">@style/CoinnectionTheme.Dark.Dialog</item>
         <item name="android:alertDialogTheme">@style/CoinnectionTheme.Dark.Dialog.Alert</item>
         <item name="android:colorControlHighlight">@color/colorRippleDarkBackground</item>
         <item name="android:dialogTheme">@style/CoinnectionTheme.Dark.Dialog</item>
-        <item name="android:spinnerDropDownItemStyle">@style/CoinnectionTheme.Dark.SpinnerDropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">
+            @style/CoinnectionTheme.Dark.SpinnerDropDownItem
+        </item>
         <item name="android:spinnerItemStyle">@style/CoinnectionTheme.Dark.SpinnerItem</item>
-        <!--<item name="android:spinnerStyle">@style/CoinnectionTheme.Light.Spinner</item>-->
+        <item name="android:spinnerStyle">@style/CoinnectionTheme.Dark.Spinner</item>
         <item name="android:textColorHint">@color/colorTextWhiteDisableHint</item>
         <item name="android:textColorPrimary">@color/colorTextWhitePrimary</item>
         <item name="android:textColorSecondary">@color/colorTextWhiteSecondary</item>
@@ -75,23 +87,26 @@
     </style>
 
 
-
     <!-- Theme dependent styles -->
-    <style name="CoinnectionTheme.Light.CardView" parent="CardView.Light"/>
-    <style name="CoinnectionTheme.Dark.CardView" parent="CardView.Dark"/>
+    <style name="CoinnectionTheme.Light.CardView" parent="CardView.Light" />
 
-    <style name="CoinnectionTheme.Light.Dialog" parent="Theme.AppCompat.Light.Dialog"/>
+    <style name="CoinnectionTheme.Dark.CardView" parent="CardView.Dark" />
+
+    <style name="CoinnectionTheme.Light.Dialog" parent="Theme.AppCompat.Light.Dialog" />
+
     <style name="CoinnectionTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="android:colorAccent">@color/colorAccentDark</item>
         <item name="android:textColor">@color/colorTextWhitePrimary</item>
         <item name="android:textColorSecondary">@color/colorTextWhiteSecondary</item>
         <item name="android:windowBackground">@color/colorCardBackgroundDark</item>
     </style>
-    
+
+
     <style name="CoinnectionTheme.Light.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:colorControlActivated">@color/colorAccent</item>
     </style>
+
     <style name="CoinnectionTheme.Dark.Dialog.Alert" parent="Theme.AppCompat.Dialog.Alert">
         <item name="android:background">@color/colorCardBackgroundDark</item>
         <item name="android:colorAccent">@color/colorAccentDark</item>
@@ -106,6 +121,7 @@
         <item name="android:textColor">@color/colorTextBlackSecondary</item>
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="CoinnectionTheme.Dark.SpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:textColor">@color/colorTextWhiteSecondary</item>
         <item name="android:textSize">14sp</item>
@@ -114,34 +130,37 @@
     <style name="CoinnectionTheme.Light.SpinnerDropDownItem" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="CoinnectionTheme.Dark.SpinnerDropDownItem" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:background">@color/colorCardBackgroundDark</item>
         <item name="android:textColor">@color/colorTextWhitePrimary</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="CoinnectionTheme.Light.Spinner" parent="Platform.Widget.AppCompat.Spinner">
-
-    </style>
-    <style name="CoinnectionTheme.Dark.Spinner" parent="Platform.Widget.AppCompat.Spinner">
+    <style name="CoinnectionTheme.Light.Spinner" parent="Base.Widget.AppCompat.Spinner">
 
     </style>
 
-    <!-- Styles persistent across Themes -->
-    <style name="WindowAnimationTransition">
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    <style name="CoinnectionTheme.Dark.Spinner" parent="Widget.AppCompat.Spinner">
+
     </style>
 
-    <style name="CoinnectionTheme.AssetSearchView" parent="Widget.AppCompat.Light.SearchView">
+     <!--Styles persistent across Themes -->
+
+    <style name="CoinnectionTheme.Base.AllAssetSearchView" parent="Widget.AppCompat.Light.SearchView">
+        <item name="searchIcon">@null</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
+    <style name="CoinnectionTheme.Base.AssetSearchView" parent="Widget.AppCompat.Light.SearchView">
         <item name="searchHintIcon">@null</item>
         <item name="searchIcon">@null</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
     </style>
-    <style name="CoinnectionTheme.AllAssetSearchView" parent="Widget.AppCompat.Light.SearchView">
-        <item name="searchIcon">@null</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
+
+    <style name="CoinnectionTheme.Base.Cursor" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
     </style>
 </resources>

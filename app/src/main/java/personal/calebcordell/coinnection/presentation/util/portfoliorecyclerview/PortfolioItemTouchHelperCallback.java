@@ -3,19 +3,20 @@ package personal.calebcordell.coinnection.presentation.util.portfoliorecyclervie
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import javax.inject.Inject;
+
 import personal.calebcordell.coinnection.presentation.util.ItemTouchHelperAdapter;
 
 
 public class PortfolioItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
-    private final ItemTouchHelperAdapter mAdapter;
+    private ItemTouchHelperAdapter mAdapter;
 
     private boolean isDragging = false;
     private boolean isSwiping = false;
 
-    public PortfolioItemTouchHelperCallback(ItemTouchHelperAdapter adapter) {
-        mAdapter = adapter;
-    }
+    @Inject
+    public PortfolioItemTouchHelperCallback() {}
 
     @Override
     public boolean isLongPressDragEnabled() {
@@ -30,7 +31,7 @@ public class PortfolioItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int dragFlags = 0;
-        if(viewHolder instanceof PortfolioAssetItemViewHolder || viewHolder instanceof  WatchlistItemViewHolder) {
+        if (viewHolder instanceof PortfolioRecyclerViewAdapter.PortfolioAssetItemViewHolder || viewHolder instanceof PortfolioRecyclerViewAdapter.WatchlistItemViewHolder) {
             dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         }
         return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, dragFlags);
@@ -38,8 +39,8 @@ public class PortfolioItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        if( (viewHolder instanceof PortfolioAssetItemViewHolder && target instanceof PortfolioAssetItemViewHolder) ||
-                (viewHolder instanceof WatchlistItemViewHolder && target instanceof WatchlistItemViewHolder) ) {
+        if ((viewHolder instanceof PortfolioRecyclerViewAdapter.PortfolioAssetItemViewHolder && target instanceof PortfolioRecyclerViewAdapter.PortfolioAssetItemViewHolder) ||
+                (viewHolder instanceof PortfolioRecyclerViewAdapter.WatchlistItemViewHolder && target instanceof PortfolioRecyclerViewAdapter.WatchlistItemViewHolder)) {
             mAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
             isDragging = true;
             return true;
@@ -58,12 +59,16 @@ public class PortfolioItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
 
-        if(isDragging) {
+        if (isDragging) {
             mAdapter.onDragFinished();
             isDragging = false;
-        } else if(isSwiping) {
+        } else if (isSwiping) {
             //Do something
             isSwiping = false;
         }
+    }
+
+    public void setItemTouchHelperAdapter(final ItemTouchHelperAdapter adapter) {
+        mAdapter = adapter;
     }
 }

@@ -1,23 +1,22 @@
 package personal.calebcordell.coinnection.domain.repository;
 
 import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import personal.calebcordell.coinnection.domain.model.Widget;
 
 
-public interface WidgetRepository {
-    List<Integer> getAllWidgetIds();
+public interface WidgetRepository<W extends Widget> {
 
-    List<Integer> getCryptocurrencyInfoWidgetIds();
+    Single<W> getWidget(int id);
+    Single<List<W>> getAllWidgets();
 
-    Widget getWidget(int id);
+    Completable insertWidget(W widget);
+    Completable insertWidgets(List<W> widgets);
 
-    List<Widget> getWidgets(int[] ids);
+    Completable deleteWidget(int id);
+    Completable deleteWidgets(int[] ids);
 
-    void updateWidget(Widget widget);
-
-    void addWidget(Widget widget);
-
-    void deleteWidget(int id);
-
-    void clearWidgets();
+    Completable clearWidgets();
 }

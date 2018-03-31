@@ -1,42 +1,37 @@
 <resources>
-    <string name="app_name">Coinnection</string>
+    <string name="app_name" translatable="false">Coinnection</string>
 
     <string name="app_version">App Version:</string>
     <string name="app_email" translatable="false">coinnection.app@gmail.com</string>
     <string name="email_subject" translatable="false">Coinnection Feedback</string>
+    <string name="email_device_info" translatable="false">"Device Info:\nOS Version: %s(%s)\nOS API Level: %d\nDevice: %s\nModel (and Product): %s (%s)\n\nMessage:\n\n"</string>
 
     <string name="initializing_text">Initializing app for the first time&#8230;</string>
     <string name="initial_load_network_error_text">Network Error, please close app and reopen when you have an internet connection.</string>
 
     <string name="title_portfolio">Portfolio</string>
     <string name="title_all_assets">All Assets</string>
-    <string name="title_market">Market</string>
+    <string name="title_asset_pair_list">Asset Pairs</string>
     <string name="title_settings">Settings</string>
     <string name="title_about">About</string>
     <string name="title_donate">Donate</string>
     <string name="title_licenses">Licenses</string>
 
     <string name="title_force_update">Force Update?</string>
-    <string name="title_remove_portfolio_asset">Remove</string>
-    <string name="title_widget_style_picker">Pick a style&#8230;</string>
-    <string name="title_widget_cryptocurrency_picker">Pick an asset&#8230;</string>
+    <string name="title_remove_portfolio_asset">Remove Asset</string>
+    <string name="title_remove_asset_pair">Remove Asset Pair</string>
+    <string name="title_widget_asset_picker">Choose asset pair:</string>
+
+    <string name="symbol_dash" translatable="false">&#8212;</string>
 
     <string name="search_hint">Search assets&#8230;</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="nav_option_portfolio">Portfolio</string>
-    <string name="nav_option_market">Market</string>
     <string name="nav_option_settings">Settings</string>
     <string name="nav_option_about">About</string>
 
     <string name="action_favorite">Favorite</string>
-    <string name="action_add_balance">Add Balance</string>
-    <string name="action_edit_balance">Edit Balance</string>
-    <string name="action_remove_balance">Remove Balance</string>
     <string name="action_search">Search</string>
-    <string name="action_settings">Settings</string>
 
     <string name="add">Add</string>
     <string name="add_balance">Add Balance</string>
@@ -49,17 +44,16 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="donate">Donate</string>
+    <string name="okay">Okay</string>
 
     <string name="rank_header">Rank</string>
     <string name="available_supply_header">Available Supply</string>
     <string name="total_supply_header">Total Supply</string>
-    <string name="capitalization_header">Capitalization</string>
+    <string name="max_supply_header">Max Supply</string>
+    <string name="global_market_cap_header">Global Market Cap:</string>
     <string name="market_value_header">Market Value</string>
     <string name="amount_header">Amount</string>
     <string name="total_balance_header">Total Balance</string>
-    <string name="balance_header">Balance</string>
-    <string name="information_header">Information</string>
-    <string name="news_header">News</string>
     <string name="name_header">Name</string>
     <string name="price_header">Price</string>
     <string name="navigation_header">Navigation</string>
@@ -72,7 +66,6 @@
     <string name="percent_change_24h_short">% Change 24H</string>
     <string name="percent_change_7d_short">% Change 7D</string>
 
-
     <string name="one_hour_change_text">Past Hour</string>
     <string name="one_day_change_text">Past Day</string>
     <string name="one_week_change_text">Past Week</string>
@@ -81,36 +74,24 @@
     <string name="twenty_four_hour_abbreviation_label">24h</string>
     <string name="seven_day_abbreviation_label">7d</string>
 
-    <string name="hour_abbreviation">h</string>
-    <string name="day_abbreviation">d</string>
-    <string name="week_abbreviation">w</string>
-
-    <string name="thousand_abbreviation">k</string>
-    <string name="million_abbreviation">M</string>
-    <string name="billion_abbreviation">B</string>
-    <string name="trillion_abbreviation">T</string>
-
-    <string name="favorites_tab_title">Favorites</string>
-    <string name="all_tab_title">All</string>
 
     <string name="asset_section_title">Assets</string>
     <string name="asset_section_empty_text">Add assets to your portfolio.  Get started by tapping on the search icon in the top right corner of the screen.</string>
     <string name="watchlist_section_title">Watchlist</string>
     <string name="watchlist_section_empty_text">Add assets to your watchlist.  Get started by tapping on the search icon in the top right corner of the screen.</string>
     <string name="balance_section_title">Balance</string>
-    <string name="statistics_section_title">Statistics</string>
+    <string name="statistics_section_title">Information</string>
+    <string name="currency_section_title">Fiat Currencies</string>
+    <string name="asset_pair_list_empty_text">Add an asset pair.  Get started by tapping the add button below.</string>
 
-    <string name="no_cryptos_text">You currently have no cryptocurrencies in your portfolio.
-        Please click the add button at the top of the screen to add a asset.
-    </string>
-    <string name="no_favorites_text">You haven\'t favorited any cryptocurrencies.
-        Please click on a asset and tap the favorite button at the top of the screen to favorite.
-    </string>
     <string name="force_update_text">
         It is recommended to have a good data connection before starting an update.
     </string>
     <string name="remove_portfolio_asset_text">
         Are you sure you want to remove this asset from your portfolio?
+    </string>
+    <string name="remove_asset_pair_text">
+        Are you sure you want to remove this asset pair?
     </string>
     <string name="donation_header_text">
         Donations are appreciated!\nTap an item to view in more detail
@@ -120,61 +101,161 @@
     <string name="support_email_text">Support/feedback email</string>
     <string name="app_review_text">Rate this app</string>
     <string name="coin_market_cap_text">All data from CoinMarketCap.com</string>
-    <string name="coin_market_cap_url">https://www.coinmarketcap.com</string>
+    <string name="coin_market_cap_url" translatable="false">https://www.coinmarketcap.com</string>
     <string name="erc20_link_text">List of erc20 tokens</string>
-    <string name="erc20_link_url">https://etherscan.io/tokens</string>
+    <string name="erc20_link_url" translatable="false">https://etherscan.io/tokens</string>
 
     <string name="pref_currency">Local Currency</string>
     <string name="pref_currency_summary">Select which currency should be used to display prices.</string>
     <string name="pref_currency_default" translatable="false">usd</string>
-    <string name="currency_aud">AUD - $ Australia Dollar</string>
-    <string name="currency_brl">BRL - $ Brazil Real</string>
-    <string name="currency_cad">CAD - $ Canada Dollar</string>
-    <string name="currency_chf">CHF - CHF Switzerland Franc</string>
-    <string name="currency_cny">CNY - ¥ China Yuan/Renminbi</string>
-    <string name="currency_eur">EUR - € Euro</string>
-    <string name="currency_gbp">GBP - £ Great Britain Pound</string>
-    <string name="currency_hkd">HKD - $ Hong Kong Dollar</string>
-    <string name="currency_idr">IDR - Rp Indonesia Rupiah</string>
-    <string name="currency_inr">INR - ₹ India Rupee</string>
-    <string name="currency_jpy">JPY - ¥ Japan Yen</string>
-    <string name="currency_krw">KRW - ₩ South Korea Won</string>
-    <string name="currency_mxn">MXN - $ Mexico Peso</string>
-    <string name="currency_rub">RUB - ₽ Russia Rouble</string>
-    <string name="currency_usd">USD - $ United States Dollar</string>
+    <string name="currency_aud">AUD &#8211; $ Australia Dollar</string>
+    <string name="currency_brl">BRL &#8211; $ Brazil Real</string>
+    <string name="currency_cad">CAD &#8211; $ Canada Dollar</string>
+    <string name="currency_chf">CHF &#8211; CHF Switzerland Franc</string>
+    <string name="currency_clp">CLP &#8211; $ Chile Peso</string>
+    <string name="currency_cny">CNY &#8211; ¥ China Yuan/Renminbi</string>
+    <string name="currency_czk">CZK &#8211; Kč Czech Republic Koruna</string>
+    <string name="currency_dkk">DKK &#8211; kr Denmark Krone</string>
+    <string name="currency_eur">EUR &#8211; € Euro</string>
+    <string name="currency_gbp">GBP &#8211; £ Great Britain Pound</string>
+    <string name="currency_hkd">HKD &#8211; $ Hong Kong Dollar</string>
+    <string name="currency_huf">HUF &#8211; Ft Hungary Forint</string>
+    <string name="currency_idr">IDR &#8211; Rp Indonesia Rupiah</string>
+    <string name="currency_ils">ILS &#8211; ₪ Israel Shekel</string>
+    <string name="currency_inr">INR &#8211; ₹ India Rupee</string>
+    <string name="currency_jpy">JPY &#8211; ¥ Japan Yen</string>
+    <string name="currency_krw">KRW &#8211; ₩ South Korea Won</string>
+    <string name="currency_mxn">MXN &#8211; $ Mexico Peso</string>
+    <string name="currency_myr">MYR &#8211; RM Malaysia Ringgit</string>
+    <string name="currency_nok">NOK &#8211; kr Norway Krone</string>
+    <string name="currency_nzd">NZD &#8211; $ New Zealand Dollar</string>
+    <string name="currency_php">PHP &#8211; ₱ Philippines Peso</string>
+    <string name="currency_pkr">PKR &#8211; ₨ Pakistan Rupee</string>
+    <string name="currency_pln">PLN &#8211; zł Poland Zloty</string>
+    <string name="currency_rub">RUB &#8211; ₽ Russia Rouble</string>
+    <string name="currency_sek">SEK &#8211; kr Sweden Krona</string>
+    <string name="currency_sgd">SGD &#8211; $ Singapore Dollar</string>
+    <string name="currency_thb">THB &#8211; ฿ Thailand Baht</string>
+    <string name="currency_try">TRY &#8211; ₺ Turkey Lira</string>
+    <string name="currency_twd">TWD &#8211; NT$ Taiwan New Dollar</string>
+    <string name="currency_usd">USD &#8211; $ United States Dollar</string>
+    <string name="currency_zar">ZAR &#8211; R South African Rand</string>
+
+    <string name="currency_code_aud" translatable="false">AUD</string>
+    <string name="currency_code_brl" translatable="false">BRL</string>
+    <string name="currency_code_cad" translatable="false">CAD</string>
+    <string name="currency_code_chf" translatable="false">CHF</string>
+    <string name="currency_code_clp" translatable="false">CLP</string>
+    <string name="currency_code_cny" translatable="false">CNY</string>
+    <string name="currency_code_czk" translatable="false">CZK</string>
+    <string name="currency_code_dkk" translatable="false">DKK</string>
+    <string name="currency_code_eur" translatable="false">EUR</string>
+    <string name="currency_code_gbp" translatable="false">GBP</string>
+    <string name="currency_code_hkd" translatable="false">HKD</string>
+    <string name="currency_code_huf" translatable="false">HUF</string>
+    <string name="currency_code_idr" translatable="false">IDR</string>
+    <string name="currency_code_ils" translatable="false">ILS</string>
+    <string name="currency_code_inr" translatable="false">INR</string>
+    <string name="currency_code_jpy" translatable="false">JPY</string>
+    <string name="currency_code_krw" translatable="false">KRW</string>
+    <string name="currency_code_mxn" translatable="false">MXN</string>
+    <string name="currency_code_myr" translatable="false">MYR</string>
+    <string name="currency_code_nok" translatable="false">NOK</string>
+    <string name="currency_code_nzd" translatable="false">NZD</string>
+    <string name="currency_code_php" translatable="false">PHP</string>
+    <string name="currency_code_pkr" translatable="false">PKR</string>
+    <string name="currency_code_pln" translatable="false">PLN</string>
+    <string name="currency_code_rub" translatable="false">RUB</string>
+    <string name="currency_code_sek" translatable="false">SEK</string>
+    <string name="currency_code_sgd" translatable="false">SGD</string>
+    <string name="currency_code_thb" translatable="false">THB</string>
+    <string name="currency_code_try" translatable="false">TRY</string>
+    <string name="currency_code_twd" translatable="false">TWD</string>
+    <string name="currency_code_usd" translatable="false">USD</string>
+    <string name="currency_code_zar" translatable="false">ZAR</string>
+
+    <string name="currency_name_aud">Australia Dollar</string>
+    <string name="currency_name_brl">Brazil Real</string>
+    <string name="currency_name_cad">Canada Dollar</string>
+    <string name="currency_name_chf">Switzerland Franc</string>
+    <string name="currency_name_clp">Chile Peso</string>
+    <string name="currency_name_cny">China Yuan/Renminbi</string>
+    <string name="currency_name_czk">Czech Republic Koruna</string>
+    <string name="currency_name_dkk">Denmark Krone</string>
+    <string name="currency_name_eur">Euro</string>
+    <string name="currency_name_gbp">Great Britain Pound</string>
+    <string name="currency_name_hkd">Hong Kong Dollar</string>
+    <string name="currency_name_huf">Hungary Forint</string>
+    <string name="currency_name_idr">Indonesia Rupiah</string>
+    <string name="currency_name_ils">Israel Shekel</string>
+    <string name="currency_name_inr">India Rupee</string>
+    <string name="currency_name_jpy">Japan Yen</string>
+    <string name="currency_name_krw">South Korea Won</string>
+    <string name="currency_name_mxn">Mexico Peso</string>
+    <string name="currency_name_myr">Malaysia Ringgit</string>
+    <string name="currency_name_nok">Norway Krone</string>
+    <string name="currency_name_nzd">New Zealand Dollar</string>
+    <string name="currency_name_php">Philippines Peso</string>
+    <string name="currency_name_pkr">Pakistan Rupee</string>
+    <string name="currency_name_pln">Poland Zloty</string>
+    <string name="currency_name_rub">Russia Rouble</string>
+    <string name="currency_name_sek">Sweden Krona</string>
+    <string name="currency_name_sgd">Singapore Dollar</string>
+    <string name="currency_name_thb">Thailand Baht</string>
+    <string name="currency_name_try">Turkey Lira</string>
+    <string name="currency_name_twd">Taiwan New Dollar</string>
+    <string name="currency_name_usd">United States Dollar</string>
+    <string name="currency_name_zar">South African Rand</string>
 
     <string name="pref_app_theme">App Theme</string>
-    <string name="pref_app_theme_summary">Choose how the Coinnection looks.</string>
+    <string name="pref_app_theme_summary">Choose how Coinnection looks</string>
     <string name="pref_app_theme_default" translatable="false">light</string>
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>
 
-    <string name="pref_data_refresh">Full Update Time</string>
-    <string name="pref_data_refresh_summary">Select how often to do a full update.  This is used to add new cryptocurrencies as they become available.</string>
-    <string name="pref_data_refresh_default" translatable="false">2</string>
-
     <string name="pref_force_update">Force Update</string>
+    <string name="pref_force_update_summary">Force app to reload all data</string>
 
-    <string name="widget_cryptocurrency_info_1x1_label">Price</string>
-    <string name="widget_cryptocurrency_info_2x1_label">Price</string>
-    <string name="widget_cryptocurrency_multiple_info_label">Price Multiple</string>
+    <string name="widget_asset_info_label">Asset Price</string>
 
-    <string name="wallet_name_bitcoin">Bitcoin</string>
-    <string name="wallet_address_bitcoin">1CrLnp97zRoNiE8UCm5V46wzzcXseE1s2E</string>
-    <string name="wallet_name_bitcoin_cash">Bitcoin Cash</string>
-    <string name="wallet_address_bitcoin_cash">15K1YVgyVpMrGLTZLtHa8JbfV7AQnwwyMv</string>
-    <string name="wallet_name_dash">Dash</string>
-    <string name="wallet_address_dash">XfaSwwPd5F2vPme4CPYEKw5hMSUaLWbsH8</string>
-    <string name="wallet_name_decred">Decred</string>
-    <string name="wallet_address_decred">Dshh9jhFVVCaMqx9BCrRjQdHTqn7FtfWiGv</string>
-    <string name="wallet_name_dogecoin">Dogecoin</string>
-    <string name="wallet_address_dogecoin">DCXTjurPxd5sxCvwHGFijyvf6Fcyw3g8tu</string>
-    <string name="wallet_name_eth_classic">Ethereum Classic</string>
-    <string name="wallet_address_eth_classic">0x88a1e6ff18d2ecb02e601fe46e075cb9e657413b</string>
-    <string name="wallet_name_ethereum">Ethereum + any erc20 token</string>
-    <string name="wallet_address_ethereum">0xbe54a642fce71a1484f634b257cf5748146fe5ec</string>
-    <string name="wallet_name_litecoin">Litecoin</string>
-    <string name="wallet_address_litecoin">LW2KMe6Q3rW7PLqLqWVHSMQbJvd1ryFUwC</string>
-    <string name="wallet_name_zcash">Zcash</string>
-    <string name="wallet_address_zcash">t1QNcmhNW9Mrngb13Yb77AQqertNKpBsLqW</string>
+    <string name="wallet_name_bitcoin" translatable="false">Bitcoin</string>
+    <string name="wallet_address_bitcoin" translatable="false">1CrLnp97zRoNiE8UCm5V46wzzcXseE1s2E</string>
+    <string name="wallet_name_bitcoin_cash" translatable="false">Bitcoin Cash</string>
+    <string name="wallet_address_bitcoin_cash" translatable="false">15K1YVgyVpMrGLTZLtHa8JbfV7AQnwwyMv</string>
+    <string name="wallet_name_bitcoin_gold" translatable="false">Bitcoin Gold</string>
+    <string name="wallet_address_bitcoin_gold" translatable="false">GU98yJwXcj79tS23yjbHtLHPJuPfhZTncC</string>
+    <string name="wallet_name_dash" translatable="false">Dash</string>
+    <string name="wallet_address_dash" translatable="false">XfaSwwPd5F2vPme4CPYEKw5hMSUaLWbsH8</string>
+    <string name="wallet_name_decred" translatable="false">Decred</string>
+    <string name="wallet_address_decred" translatable="false">Dshh9jhFVVCaMqx9BCrRjQdHTqn7FtfWiGv</string>
+    <string name="wallet_name_eth_classic" translatable="false">Ethereum Classic</string>
+    <string name="wallet_address_eth_classic" translatable="false">0x88a1e6ff18d2ecb02e601fe46e075cb9e657413b</string>
+    <string name="wallet_name_ethereum" translatable="false">Ethereum + any erc20 token</string>
+    <string name="wallet_address_ethereum" translatable="false">0xbe54a642fce71a1484f634b257cf5748146fe5ec</string>
+    <string name="wallet_name_litecoin" translatable="false">Litecoin</string>
+    <string name="wallet_address_litecoin" translatable="false">LW2KMe6Q3rW7PLqLqWVHSMQbJvd1ryFUwC</string>
+    <string name="wallet_name_vertcoin" translatable="false">Vertcoin</string>
+    <string name="wallet_address_vertcoin" translatable="false">VtPRkdb2HLkWHCfD4kuS9PfjSZrZJNL1s7</string>
+
+
+    <string name="butterknife_license_title" translatable="false">Butter Knife</string>
+    <string name="butterknife_license_text" translatable="false">Copyright 2013 Jake Wharton\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="icons_license_title" translatable="false">Cryptocurrency Icons</string>
+    <string name="icons_license_text" translatable="false">https://github.com/cjdowner/cryptocurrency&#8211;icons</string>
+    <string name="dagger_license_title" translatable="false">Dagger</string>
+    <string name="dagger_license_text" translatable="false">Copyright 2012 The Dagger Authors\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="glide_license_title" translatable="false">Glide</string>
+    <string name="glide_license_text" translatable="false">License for everything not in third_party and not otherwise marked:\n\nCopyright 2014 Google, Inc. All rights reserved.\n\nRedistribution and use in source and binary forms, with or without modification, arepermitted provided that the following conditions are met:\n\n\t1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.\n\n\t2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.\n\nTHIS SOFTWARE IS PROVIDED BY GOOGLE, INC. \`\`AS IS\'\' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL GOOGLE, INC. OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\nThe views and conclusions contained in the software and documentation are those of the authors and should not be interpreted as representing official policies, either expressed or implied, of Google, Inc.\n\n\nLicense for third_party/disklrucache:\n\nCopyright 2012 Jake Wharton\nCopyright 2011 The Android Open Source Project\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n\n\nLicense for third_party/gif_decoder:\n\nCopyright &#169; 2013 Xcellent Creations, Inc.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\nLicense for third_party/gif_encoder/AnimatedGifEncoder.java and third_party/gif_encoder/LZWEncoder.java:\n\nNo copyright asserted on the source code of this class. May be used for any purpose, however, refer to the Unisys LZW patent for restrictions on use of the associated LZWEncoder class. Please forward any corrections to kweiner@fmsware.com.\n\n\nLicense for third_party/gif_encoder/NeuQuant.java\n\nCopyright &#169; 1994 Anthony Dekker\n\nNEUQUANT Neural&#8211;Net quantization algorithm by Anthony Dekker, 1994. See "Kohonen neural networks for optimal colour quantization" in "Network: Computation in Neural Systems" Vol. 5 (1994) pp 351&#8211;367. for a discussion of the algorithm.\n\nAny party obtaining a copy of these files from the author, directly or indirectly, is granted, free of charge, a full and unrestricted irrevocable, world&#8211;wide, paid up, royalty&#8211;free, nonexclusive right and license to deal in this software and documentation files (the "Software"), including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons who receive copies from any such party to do so, with the only requirement being that this copyright notice remain intact.</string>
+    <string name="gson_license_title" translatable="false">Gson</string>
+    <string name="gson_license_text" translatable="false">Copyright 2008 Google Inc.\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="mpandroidchart_license_title" translatable="false">MPAndroidChart</string>
+    <string name="mpandroidchart_license_text" translatable="false">Copyright 2018 Philipp Jahoda\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n\nSpecial thanks to danielgindi, mikegr, tony and jitpack.io for their contributions to this project.</string>
+    <string name="okhttp_license_title" translatable="false">OkHttp</string>
+    <string name="okhttp_license_text" translatable="false">Copyright 2016 Square, Inc.\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="retrofit_license_title" translatable="false">Retrofit</string>
+    <string name="retrofit_license_text" translatable="false">Copyright 2013 Square, Inc.\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at \n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="rxandroid_license_title" translatable="false">RxAndroid</string>
+    <string name="rxandroid_license_text" translatable="false">Copyright 2015 The RxAndroid authors\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, softwaredistributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
+    <string name="rxjava_license_title" translatable="false">RxJava</string>
+    <string name="rxjava_license_text" translatable="false">Copyright &#169; 2016&#8211;present, RxJava Contributors.\n\nLicensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE&#8211;2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</string>
 </resources>

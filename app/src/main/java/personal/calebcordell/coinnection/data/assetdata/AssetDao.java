@@ -25,6 +25,9 @@ public interface AssetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Asset> assets);
 
+    @Query("DELETE FROM assets WHERE id = :id")
+    void remove(String id);
+
     @Query("DELETE FROM assets")
     void clear();
 }

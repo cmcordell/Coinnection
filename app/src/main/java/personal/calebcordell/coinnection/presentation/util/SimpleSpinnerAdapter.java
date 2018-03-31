@@ -15,15 +15,12 @@ import java.util.Arrays;
 
 public class SimpleSpinnerAdapter extends ArrayAdapter<CharSequence> {
 
-    public SimpleSpinnerAdapter(@NonNull Context context, @ArrayRes  int textArrayResId, @LayoutRes int textViewResId) {
+    public SimpleSpinnerAdapter(@NonNull Context context, @ArrayRes int textArrayResId, @LayoutRes int textViewResId) {
         super(context, textViewResId, 0, Arrays.asList(context.getResources().getTextArray(textArrayResId)));
     }
 
     @Override
     public @NonNull View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return super.getView(
-                ((Spinner) parent).getSelectedItemPosition(),
-                convertView,
-                parent);
+        return super.getView(((Spinner) parent).getSelectedItemPosition(), convertView, parent);
     }
 }

@@ -13,9 +13,11 @@ public class PortfolioAsset extends Asset {
         this.balance = balance;
         position = -1;
     }
+
     public PortfolioAsset(Asset asset) {
         this(asset, 0.0);
     }
+
     public PortfolioAsset() {
         this(new Asset());
     }
@@ -23,6 +25,7 @@ public class PortfolioAsset extends Asset {
     public double getBalance() {
         return this.balance;
     }
+
     public void setBalance(double balance) {
         this.balance = balance;
     }
@@ -30,6 +33,7 @@ public class PortfolioAsset extends Asset {
     public int getPosition() {
         return position;
     }
+
     public void setPosition(int position) {
         this.position = position;
     }
@@ -42,14 +46,17 @@ public class PortfolioAsset extends Asset {
         super.writeToParcel(out, flags);
         out.writeDouble(balance);
     }
+
     protected PortfolioAsset(Parcel in) {
         super(in);
         balance = in.readDouble();
     }
+
     @Override
     public int describeContents() {
         return 0;
     }
+
     public static final Parcelable.Creator<PortfolioAsset> CREATOR = new Parcelable.Creator<PortfolioAsset>() {
         @Override
         public PortfolioAsset createFromParcel(Parcel in) {

@@ -1,8 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="personal.calebcordell.coinnection.presentation.views.assetdetailtab.AssetDetailTabFragment">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/asset_recycler_view"
@@ -15,5 +13,5 @@
         android:paddingBottom="16dp"
         android:scrollbars="vertical"
         android:scrollbarStyle="outsideOverlay"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </FrameLayout>

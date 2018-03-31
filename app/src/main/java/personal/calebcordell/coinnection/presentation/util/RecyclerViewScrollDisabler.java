@@ -1,7 +1,6 @@
 package personal.calebcordell.coinnection.presentation.util;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MotionEvent;
 
 
@@ -23,8 +22,7 @@ public class RecyclerViewScrollDisabler implements RecyclerView.OnItemTouchListe
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        Log.d("RecycViewScrollDisabler", "MotionEvent = "+e.getAction());
-        switch(e.getAction()) {
+        switch (e.getAction()) {
             case MotionEvent.ACTION_SCROLL:
                 return !mIsScrollEnabled;
             default:
@@ -33,8 +31,10 @@ public class RecyclerViewScrollDisabler implements RecyclerView.OnItemTouchListe
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    }
 
     @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept){}
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+    }
 }

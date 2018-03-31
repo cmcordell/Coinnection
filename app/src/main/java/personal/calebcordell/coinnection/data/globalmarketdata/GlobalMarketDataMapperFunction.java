@@ -2,18 +2,23 @@ package personal.calebcordell.coinnection.data.globalmarketdata;
 
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.functions.Function;
 import personal.calebcordell.coinnection.domain.model.GlobalMarketData;
 
 
+@Singleton
 public class GlobalMarketDataMapperFunction implements Function<GlobalMarketDataEntity, GlobalMarketData> {
     private static final double PERCENT_MODIFIER = 100.0;
 
+    @Inject
     public GlobalMarketDataMapperFunction() {
     }
 
     @Override
-    public GlobalMarketData apply(@NonNull final GlobalMarketDataEntity globalMarketDataEntity) throws Exception {
+    public GlobalMarketData apply(@NonNull final GlobalMarketDataEntity globalMarketDataEntity) {
 
         GlobalMarketData globalMarketData = new GlobalMarketData();
         globalMarketData.setTotalMarketCap(globalMarketDataEntity.getTotalMarketCap());

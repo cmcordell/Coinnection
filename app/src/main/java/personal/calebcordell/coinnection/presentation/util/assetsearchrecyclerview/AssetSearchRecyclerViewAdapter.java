@@ -1,66 +1,67 @@
 package personal.calebcordell.coinnection.presentation.util.assetsearchrecyclerview;
 
+import android.annotation.SuppressLint;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import personal.calebcordell.coinnection.R;
-import personal.calebcordell.coinnection.domain.model.Asset;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 
-public class AssetSearchRecyclerViewAdapter extends RecyclerView.Adapter<AssetSearchItemViewHolder> {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import personal.calebcordell.coinnection.R;
+import personal.calebcordell.coinnection.domain.model.Asset;
+import personal.calebcordell.coinnection.presentation.Constants;
+import personal.calebcordell.coinnection.presentation.Preferences;
 
-    private List<Asset> mAssets;
-    private List<Asset> mAssetsVisible;
-    private Map<String, Integer> mVisibleAssetPositions;
 
-    private List<String> mPortfolioAssetIds;
-    private List<String> mWatchlistAssetIds;
+public class AssetSearchRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private List<Asset> mAssets = new ArrayList<>();
+    private List<Asset> mAssetsVisible = new ArrayList<>();
+    private Map<String, Integer> mVisibleAssetPositions = new HashMap<>();
+
+    private List<String> mPortfolioAssetIds = new ArrayList<>();
+    private List<String> mWatchlistAssetIds = new ArrayList<>();
 
     private AssetSearchItemListener mAssetSearchItemListener;
 
-    private String mCurrentFilterText;
+    private String mCurrentFilterText = "";
 
-    public AssetSearchRecyclerViewAdapter() {
-        this(null);
-    }
-    public AssetSearchRecyclerViewAdapter(AssetSearchItemListener assetSearchItemListener) {
-        this(new ArrayList<>(), new ArrayList<>(), assetSearchItemListener);
-    }
-    public AssetSearchRecyclerViewAdapter(List<String> portfolioAssetIds, List<String> watchlistAssetIds,
-                                          AssetSearchItemListener assetSearchItemListener) {
-        this(new ArrayList<>(), portfolioAssetIds, watchlistAssetIds, assetSearchItemListener);
-    }
-    public AssetSearchRecyclerViewAdapter(List<Asset> assets, List<String> portfolioAssetIds,
-                                          List<String> watchlistAssetIds,
-                                          AssetSearchItemListener assetSearchItemListener) {
-        mAssets = assets;
-        mPortfolioAssetIds = portfolioAssetIds;
-        mWatchlistAssetIds = watchlistAssetIds;
-        mAssetSearchItemListener = assetSearchItemListener;
+    private final Preferences mPreferences;
 
-        mAssetsVisible = new ArrayList<>();
-        mVisibleAssetPositions = new HashMap<>(mAssets.size());
-        mCurrentFilterText = "";
+    @Inject
+    public AssetSearchRecyclerViewAdapter(Preferences preferences) {
+        mPreferences = preferences;
     }
 
     @Override
-    public AssetSearchItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_view_search_asset_item, parent, false);
         return new AssetSearchItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(AssetSearchItemViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         Asset asset = mAssetsVisible.get(position);
-        viewHolder.bind(asset, mPortfolioAssetIds.contains(asset.getId()),
+        ((AssetSearchItemViewHolder) viewHolder).bind(asset, mPortfolioAssetIds.contains(asset.getId()),
                 mWatchlistAssetIds.contains(asset.getId()), mAssetSearchItemListener);
     }
 
@@ -70,79 +71,160 @@ public class AssetSearchRecyclerViewAdapter extends RecyclerView.Adapter<AssetSe
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
 
-    public void replaceAll(List<Asset> assets) {
-        mAssets.clear();
-        mAssets.addAll(assets);
+    public void replaceAll(@NonNull List<Asset> assets) {
+        mAssets = assets;
         filter(mCurrentFilterText);
         notifyDataSetChanged();
     }
 
-    public void filter(String text) {
+    public void filter(@NonNull final String text) {
+//        Completable.fromRunnable(() -> {
+//            mCurrentFilterText = text;
+//
+//            mAssetsVisible.clear();
+//            mVisibleAssetPositions.clear();
+//
+//            if (!mCurrentFilterText.isEmpty()) {
+//                mCurrentFilterText = mCurrentFilterText.toLowerCase();
+//                for (Asset asset : mAssets) {
+//                    String assetId = asset.getAssetId();
+//                    if (assetId.toLowerCase().contains(mCurrentFilterText) || asset.getName().toLowerCase().contains(mCurrentFilterText)
+//                            || asset.getSymbol().toLowerCase().contains(mCurrentFilterText)) {
+//                        mVisibleAssetPositions.put(assetId, mAssetsVisible.size());
+//                        mAssetsVisible.add(asset);
+//                    }
+//                }
+//            }
+//        })
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(this::notifyDataSetChanged);
+
         mCurrentFilterText = text;
 
         mAssetsVisible.clear();
         mVisibleAssetPositions.clear();
 
-        if(!text.isEmpty()) {
-            text = text.toLowerCase();
-            for(Asset asset : mAssets) {
+        if (!mCurrentFilterText.isEmpty()) {
+            mCurrentFilterText = mCurrentFilterText.toLowerCase();
+            for (Asset asset : mAssets) {
                 String assetId = asset.getId();
-                if(assetId.toLowerCase().contains(text) || asset.getName().toLowerCase().contains(text)
-                        || asset.getSymbol().toLowerCase().contains(text)) {
+                if (assetId.toLowerCase().contains(mCurrentFilterText) || asset.getName().toLowerCase().contains(mCurrentFilterText)
+                        || asset.getSymbol().toLowerCase().contains(mCurrentFilterText)) {
                     mVisibleAssetPositions.put(assetId, mAssetsVisible.size());
                     mAssetsVisible.add(asset);
                 }
             }
         }
+
         notifyDataSetChanged();
     }
 
-    public void setPortfolioAssetIds(List<String> portfolioAssetIds) {
-        mPortfolioAssetIds.clear();
-        mPortfolioAssetIds.addAll(portfolioAssetIds);
+    public void setPortfolioAssetIds(@NonNull List<String> portfolioAssetIds) {
+        mPortfolioAssetIds = portfolioAssetIds;
 
-        for(String assetId : portfolioAssetIds) {
+        for (String assetId : portfolioAssetIds) {
             Integer position = mVisibleAssetPositions.get(assetId);
-            if(position != null) {
+            if (position != null) {
                 notifyItemChanged(position);
             }
         }
     }
 
-    public void setWatchlistAssetIds(List<String> watchlistAssetIds) {
-        mWatchlistAssetIds.clear();
-        mWatchlistAssetIds.addAll(watchlistAssetIds);
+    public void setWatchlistAssetIds(@NonNull List<String> watchlistAssetIds) {
+        mWatchlistAssetIds = watchlistAssetIds;
 
-        for(String assetId : watchlistAssetIds) {
+        for (String assetId : watchlistAssetIds) {
             Integer position = mVisibleAssetPositions.get(assetId);
-            if(position != null) {
+            if (position != null) {
                 notifyItemChanged(position);
             }
         }
     }
 
-    public void setAssetOnWatchlist(String assetId, boolean isOnWatchlist) {
-        if(isOnWatchlist) {
-            if(!mWatchlistAssetIds.contains(assetId)) {
+    public void setAssetOnWatchlist(@NonNull String assetId, boolean isOnWatchlist) {
+        if (isOnWatchlist) {
+            if (!mWatchlistAssetIds.contains(assetId)) {
                 mWatchlistAssetIds.add(assetId);
             }
         } else {
             mWatchlistAssetIds.remove(assetId);
         }
 
-
         Integer position = mVisibleAssetPositions.get(assetId);
-        if(position != null) {
+        if (position != null) {
             notifyItemChanged(position);
         }
     }
 
-    public void setAssetSearchItemListener(AssetSearchItemListener assetSearchItemListener) {
+    public void setAssetSearchItemListener(final AssetSearchItemListener assetSearchItemListener) {
         mAssetSearchItemListener = assetSearchItemListener;
+    }
+
+
+
+    protected class AssetSearchItemViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.asset_logo)
+        ImageView mAssetLogo;
+        @BindView(R.id.asset_name)
+        TextView mAssetName;
+        @BindView(R.id.asset_symbol)
+        TextView mAssetSymbol;
+        @BindView(R.id.asset_favorite_button)
+        ImageButton mAssetFavoriteButton;
+
+        AssetSearchItemViewHolder(View itemView) {
+            super(itemView);
+
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void bind(final Asset asset, final boolean isInPortfolio, final boolean isOnWatchlist, final AssetSearchItemListener assetSearchItemListener) {
+            Glide.with(itemView.getContext())
+                    .load(asset.getLogo())
+                    .into(mAssetLogo);
+            mAssetName.setText(asset.getName());
+            mAssetSymbol.setText(asset.getSymbol());
+
+            int[] attrs = {R.attr.drawableFavoriteBorderOverBackground, R.attr.drawableFavoriteOverBackground};
+            TypedArray styles = itemView.getContext().getApplicationContext().obtainStyledAttributes(mPreferences.getAppThemeStyleAttr(), attrs);
+            Drawable addToWatchlistDrawable = styles.getDrawable(0);
+            @SuppressLint("ResourceType") Drawable removeFromWatchlistDrawable = styles.getDrawable(1);
+            styles.recycle();
+
+            if (isInPortfolio) {
+                mAssetFavoriteButton.setVisibility(View.GONE);
+            } else {
+                mAssetFavoriteButton.setVisibility(View.VISIBLE);
+                if (isOnWatchlist) {
+                    mAssetFavoriteButton.setImageDrawable(removeFromWatchlistDrawable);
+                } else {
+                    mAssetFavoriteButton.setImageDrawable(addToWatchlistDrawable);
+                }
+            }
+
+            if (assetSearchItemListener != null) {
+                itemView.setOnClickListener((View view) ->
+                        ViewCompat.postOnAnimationDelayed(view, () ->
+                                assetSearchItemListener.onAssetItemClick(asset), Constants.SELECTABLE_VIEW_ANIMATION_DELAY));
+
+                mAssetFavoriteButton.setOnClickListener((view) ->
+                        ViewCompat.postOnAnimationDelayed(view, () -> {
+                            if (isOnWatchlist) {
+                                mAssetFavoriteButton.setImageDrawable(addToWatchlistDrawable);
+                            } else {
+                                mAssetFavoriteButton.setImageDrawable(removeFromWatchlistDrawable);
+                            }
+
+                            assetSearchItemListener.onFavoriteClick(asset, !isOnWatchlist);
+                        }, Constants.SELECTABLE_VIEW_ANIMATION_DELAY));
+            }
+        }
     }
 }

@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:paddingTop="20dp"
-    android:paddingBottom="8dp" >
+    android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/balance_edit"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
         android:inputType="numberDecimal"
-        android:textColor="?colorTextOverBackgroundPrimary" />
+        android:textColor="?colorTextOverBackgroundPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/asset_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:textColor="?colorTextOverBackgroundDisableHint"
         android:textSize="18sp"
-        android:layout_marginEnd="10dp"
-        android:textColor="?colorTextOverBackgroundDisableHint" />
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="@+id/balance_edit"
+        app:layout_constraintEnd_toEndOf="@+id/balance_edit"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/balance_edit"
+        app:layout_constraintTop_toTopOf="@+id/balance_edit" />
+</android.support.constraint.ConstraintLayout>

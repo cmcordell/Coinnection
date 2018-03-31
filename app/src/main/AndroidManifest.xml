@@ -11,17 +11,15 @@
         android:icon="@mipmap/ic_launcher"
         android:hardwareAccelerated="true"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/CoinnectionTheme.Light">
 
         <!--Activities-->
         <activity
-            android:name=".presentation.views.MainActivity"
+            android:name=".presentation.views.mainactivity.MainActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".presentation.views.StartUpScreenActivity"
+            android:name=".presentation.views.startupscreenactivity.StartUpScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,41 +28,31 @@
             </intent-filter>
         </activity>
 
-
-
-
-        <activity android:name=".widgets.cryptocurrencyinfo.CryptocurrencyInfoWidgetSetupActivity">
+        <activity android:name=".widgets.assetpair.AssetPairWidgetSetupActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
+
         <!--Receivers-->
-        <receiver android:name=".widgets.cryptocurrencyinfo.CryptocurrencyInfo1x1Widget"
-            android:label="@string/widget_cryptocurrency_info_1x1_label">
+        <receiver
+            android:name=".widgets.assetpair.AssetPairWidgetProvider"
+            android:label="@string/widget_asset_info_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider_asset_info_1x1" />
+                android:resource="@xml/widget_provider_asset_info" />
         </receiver>
 
-        <receiver android:name=".widgets.cryptocurrencyinfo.CryptocurrencyInfo2x1Widget"
-            android:label="@string/widget_cryptocurrency_info_2x1_label">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider_asset_info_1x2" />
-        </receiver>
 
         <!--Services-->
         <service
-            android:name=".widgets.cryptocurrencyinfo.CryptocurrencyInfoWidgetUpdateService"
+            android:name=".widgets.assetpair.AssetPairWidgetUpdateService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>

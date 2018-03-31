@@ -1,11 +1,10 @@
 package personal.calebcordell.coinnection.domain.repository;
 
-import io.reactivex.Completable;
-import personal.calebcordell.coinnection.domain.model.Asset;
-
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import personal.calebcordell.coinnection.domain.model.Asset;
 
 
 public interface AssetRepository {

@@ -6,29 +6,38 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:clipToPadding="false"
+            android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentInsetStartWithNavigation="0dp"
-            app:elevation="4dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:contentInsetStartWithNavigation="0dp"
+            tools:elevation="4dp" />
 
         <FrameLayout
             android:id="@+id/content_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar" />
-    </RelativeLayout>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -36,6 +45,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:elevation="16dp"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 </android.support.v4.widget.DrawerLayout>

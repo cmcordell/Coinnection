@@ -1,17 +1,20 @@
 package personal.calebcordell.coinnection.presentation.views.settings;
 
+import personal.calebcordell.coinnection.presentation.views.base.BasePresenter;
+
 
 interface SettingsContract {
-
     interface View {
         void showForceUpdateDialog();
+
+        void showMessage(String message);
     }
 
-    interface Presenter {
-        void onCurrencyPreferenceChanged();
+    abstract class Presenter extends BasePresenter<View> {
+        abstract void onCurrencyPreferenceChanged();
 
-        void onForceUpdatePreferenceClicked();
+        abstract void onForceUpdatePreferenceClicked();
 
-        void forceUpdate();
+        abstract void forceUpdate();
     }
 }

@@ -27,6 +27,7 @@ public interface WatchlistAssetDao {
 
     @Query("SELECT position FROM watchlist_assets WHERE id = :id LIMIT 1")
     int getPosition(String id);
+
     @Query("UPDATE watchlist_assets SET position = position - 1 WHERE position > :position")
     void updatePositions(int position);
 

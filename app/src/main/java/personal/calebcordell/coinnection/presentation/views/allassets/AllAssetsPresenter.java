@@ -1,32 +1,42 @@
 package personal.calebcordell.coinnection.presentation.views.allassets;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.subscribers.DisposableSubscriber;
-import personal.calebcordell.coinnection.domain.interactor.impl.FetchAllAssetsInteractor;
-import personal.calebcordell.coinnection.domain.interactor.impl.GetAllAssetsInteractor;
+import personal.calebcordell.coinnection.dagger.PerFragment;
+import personal.calebcordell.coinnection.domain.interactor.impl.assetinteractors.FetchAllAssetsInteractor;
+import personal.calebcordell.coinnection.domain.interactor.impl.assetinteractors.GetAllAssetsInteractor;
+import personal.calebcordell.coinnection.domain.interactor.impl.globalmarketdatainteractors.FetchGlobalMarketDataInteractor;
+import personal.calebcordell.coinnection.domain.interactor.impl.globalmarketdatainteractors.GetGlobalMarketDataInteractor;
 import personal.calebcordell.coinnection.domain.model.Asset;
+import personal.calebcordell.coinnection.domain.model.GlobalMarketData;
 import personal.calebcordell.coinnection.presentation.Constants;
 
 
-public class AllAssetsPresenter implements AllAssetsContract.Presenter {
+/**
+ * Presenter for AllAssetsFragment.
+ */
+@PerFragment
+public class AllAssetsPresenter extends AllAssetsContract.Presenter {
     private static final String TAG = AllAssetsPresenter.class.getSimpleName();
-
-    private AllAssetsContract.View mView;
 
     private FetchAllAssetsInteractor mFetchAllAssetsInteractor;
     private GetAllAssetsInteractor mGetAllAssetsInteractor;
+    private FetchGlobalMarketDataInteractor mFetchGlobalMarketDataInteractor;
+    private GetGlobalMarketDataInteractor mGetGlobalMarketDataInteractor;
 
-    private CompositeDisposable mCompositeDisposable;
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private Disposable mFetchAllAssetsDisposable;
+    private Disposable mFetchGlobalMarketDataDisposable;
 
-    private Timer mReloadTimer = new Timer();
+    private Timer mReloadTimer;
     private long mFetchDelay = Constants.RELOAD_TIME_ALL_ASSETS;
     private long mLastUpdated = 0;
     private boolean mFastReloadingEnabled = false;
@@ -34,47 +44,76 @@ public class AllAssetsPresenter implements AllAssetsContract.Presenter {
 
     private boolean mFirstAssetsFetch = true;
 
-    AllAssetsPresenter(@NonNull AllAssetsContract.View view) {
-        mView = view;
-
-        mFetchAllAssetsInteractor = new FetchAllAssetsInteractor();
-        mGetAllAssetsInteractor = new GetAllAssetsInteractor();
-
-        mCompositeDisposable = new CompositeDisposable();
+    @Inject
+    AllAssetsPresenter(FetchAllAssetsInteractor fetchAllAssetsInteractor,
+                       GetAllAssetsInteractor getAllAssetsInteractor,
+                       FetchGlobalMarketDataInteractor fetchGlobalMarketDataInteractor,
+                       GetGlobalMarketDataInteractor getGlobalMarketDataInteractor) {
+        mFetchAllAssetsInteractor = fetchAllAssetsInteractor;
+        mGetAllAssetsInteractor = getAllAssetsInteractor;
+        mFetchGlobalMarketDataInteractor = fetchGlobalMarketDataInteractor;
+        mGetGlobalMarketDataInteractor = getGlobalMarketDataInteractor;
     }
 
+    /**
+     * Gets all necessary data and supplies it to the view.
+     * Should be called as soon as possible from the view, assuming the UI has been loaded.
+     */
+    @Override
+    public void initialize() {
+        getAssets();
+        getGlobalMarketData();
+    }
 
-    public void start() {
+    private void getAssets() {
         mCompositeDisposable.add(mGetAllAssetsInteractor.execute(new DisposableSubscriber<List<Asset>>() {
             @Override
             public void onNext(List<Asset> assets) {
-                if(mFirstAssetsFetch) {
-                    mView.showAssets(assets);
+                mView.showAssets(assets);
+                if (mFirstAssetsFetch) {
                     mFirstAssetsFetch = false;
-
                     updateFetchTimer(assets);
-                } else {
-                    mView.updateAssets(assets);
                 }
             }
 
             @Override
-            public void onError(Throwable t) {t.printStackTrace();}
+            public void onError(Throwable t) {}
             @Override
             public void onComplete() {}
         }));
     }
 
+    private void getGlobalMarketData() {
+        mCompositeDisposable.add(mGetGlobalMarketDataInteractor.execute(new DisposableSubscriber<GlobalMarketData>() {
+            @Override
+            public void onNext(GlobalMarketData globalMarketData) {
+                mView.showGlobalMarketData(globalMarketData);
+            }
+
+            @Override
+            public void onError(Throwable t) {}
+
+            @Override
+            public void onComplete() {}
+        }));
+    }
+
+    /**
+     * Fetches all assets, new data will automatically be sent from
+     * the backend to mGetAllAssetsInteractor once loaded.
+     */
     private void fetchAssets() {
-        Log.d(TAG, "Fetch Assets started");
-        mCompositeDisposable.add(mFetchAllAssetsInteractor.execute(true, new DisposableCompletableObserver() {
+        if (mFetchAllAssetsDisposable != null && !mFetchAllAssetsDisposable.isDisposed()) {
+            mFetchAllAssetsDisposable.dispose();
+        }
+
+        mFetchAllAssetsDisposable = mFetchAllAssetsInteractor.execute(true, new DisposableCompletableObserver() {
             @Override
             public void onComplete() {
                 mFetchDelay = 0;
                 mLastUpdated = System.currentTimeMillis();
-                Log.d(TAG, "Fetch Assets complete.");
-                if(mFastReloadingEnabled) {
-                    mReloadTimer.cancel();
+                if (mFastReloadingEnabled) {
+                    stopTimer();
                     mFastReloadingEnabled = false;
                     startReloadTimer(Constants.RELOAD_TIME_ALL_ASSETS);
                 }
@@ -82,16 +121,34 @@ public class AllAssetsPresenter implements AllAssetsContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                e.printStackTrace();
-                mReloadTimer.cancel();
+                stopTimer();
                 mFastReloadingEnabled = true;
                 startReloadTimer(Constants.RELOAD_TIME_NETWORK_CHECK);
             }
-        }));
+        });
     }
 
+    private void fetchGlobalMarketData() {
+        if (mFetchGlobalMarketDataDisposable != null && !mFetchGlobalMarketDataDisposable.isDisposed()) {
+            mFetchGlobalMarketDataDisposable.dispose();
+        }
+
+        mFetchGlobalMarketDataDisposable = mFetchGlobalMarketDataInteractor.execute(new DisposableCompletableObserver() {
+            @Override
+            public void onComplete() {}
+
+            @Override
+            public void onError(Throwable e) {}
+        });
+    }
+
+    /**
+     * Resumes the reload timer and should be tied to views onResume() method.
+     * We don't want to waste data while view is paused.
+     */
+    @Override
     public void resume() {
-        if(mPaused) {
+        if (mPaused) {
             long fetchDelay = Constants.RELOAD_TIME_ALL_ASSETS - (System.currentTimeMillis() - mLastUpdated);
             if (fetchDelay < 0) {
                 fetchDelay = 0;
@@ -101,22 +158,40 @@ public class AllAssetsPresenter implements AllAssetsContract.Presenter {
         }
     }
 
+    /**
+     * Pauses the reload timer and should be tied to views onPause() method.
+     * We don't want to waste data while view is paused.
+     */
+    @Override
     public void pause() {
         mPaused = true;
-        mReloadTimer.cancel();
+        stopTimer();
     }
 
+    /**
+     * Stop the reload timer and dispose of all interactors.
+     * Should be tied to views onDestroy() method.
+     */
+    @Override
     public void destroy() {
-        mReloadTimer.cancel();
-        mCompositeDisposable.dispose();
+        stopTimer();
+        mCompositeDisposable.clear();
+        super.destroy();
     }
 
+    /**
+     * Checks if assets are up to date, i.e. lastupdated < 15 min.  If not, start reload right away.
+     * Else, calculate reload time based on oldest asset.  This method is only called on the
+     * initial load of the assets.
+     *
+     * @param assets Initial list of all assets.
+     */
     private void updateFetchTimer(List<? extends Asset> assets) {
         long currentTime = System.currentTimeMillis();
         long fetchDelay = Constants.RELOAD_TIME_ALL_ASSETS;
         long lastUpdated = currentTime;
         for (Asset asset : assets) {
-            if (!asset.isUpToDate()) {
+            if (!asset.isUpToDate(Constants.RELOAD_TIME_ALL_ASSETS)) {
                 fetchDelay = 0;
                 lastUpdated = asset.getLastUpdated();
                 break;
@@ -131,22 +206,34 @@ public class AllAssetsPresenter implements AllAssetsContract.Presenter {
 
         mLastUpdated = lastUpdated;
 
-        if(fetchDelay < mFetchDelay) {
+        if (fetchDelay < mFetchDelay) {
             mFetchDelay = fetchDelay;
 
             startReloadTimer(fetchDelay);
         }
     }
 
+    /**
+     * Starts the all asset reload timer at a fixed rate;
+     *
+     * @param fetchDelay Initial amount of time in ms to wait before fetching all assets.
+     */
     private void startReloadTimer(long fetchDelay) {
-        Log.d(TAG, "Asset Fetch Delay: " + String.format("%.2f", fetchDelay / 60000.0));
-        mReloadTimer.cancel();
+        stopTimer();
         mReloadTimer = new Timer();
         mReloadTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 fetchAssets();
+                fetchGlobalMarketData();
             }
         }, fetchDelay, Constants.RELOAD_TIME_ALL_ASSETS);
+    }
+
+    private void stopTimer() {
+        if (mReloadTimer != null) {
+            mReloadTimer.cancel();
+            mReloadTimer = null;
+        }
     }
 }

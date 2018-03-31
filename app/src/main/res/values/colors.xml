@@ -3,7 +3,6 @@
     <color name="colorAccent">#00A9FF</color>
     <color name="colorAccentDark">#007ACB</color>
     <color name="colorAccentDarker">#004F9A</color>
-    <color name="colorAccentLight">#69DAFF</color>
     <color name="colorBackgroundDark">#303030</color>
     <color name="colorBackgroundDarkFaded">#77000000</color>
     <color name="colorBackgroundLight">#F5F5F5</color>
@@ -13,9 +12,7 @@
     <color name="colorGraphFillLight">#80A9C4</color>
     <color name="colorPrimary">#005289</color>
     <color name="colorPrimaryDark">#002A5B</color>
-    <color name="colorPrimaryLight">#497EB9</color>
     <color name="colorRippleDarkBackground">#33FFFFFF</color>
-    <color name="colorRippleLightBackground">#1F000000</color>
     <color name="colorTextBlackDisableHint">#61000000</color>
     <color name="colorTextBlackPrimary">#DE000000</color>
     <color name="colorTextBlackSecondary">#8A000000</color>
@@ -23,7 +20,8 @@
     <color name="colorTextWhitePrimary">#FFFFFF</color>
     <color name="colorTextWhiteSecondary">#B3FFFFFF</color>
 
-    <color name="colorDivider">#BDBDBD</color>
     <color name="colorNegativeNumber">#F6422F</color>
     <color name="colorPositiveNumber">#48AE4B</color>
+
+    <color name="colorDeleteBackground">#DE2222</color>
 </resources>

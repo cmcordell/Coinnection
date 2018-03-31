@@ -6,18 +6,24 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import personal.calebcordell.coinnection.R;
 import personal.calebcordell.coinnection.domain.model.DonationItem;
+import personal.calebcordell.coinnection.presentation.Constants;
 import personal.calebcordell.coinnection.presentation.util.OnObjectItemClickListener;
 
 
 public class DonationItemViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.donation_item_icon) ImageView mDonationItemIcon;
-    @BindView(R.id.donation_item_name) TextView mDonationItemName;
-    @BindView(R.id.donation_item_address) TextView mDonationItemAddress;
+    @BindView(R.id.donation_item_icon)
+    ImageView mDonationItemIcon;
+    @BindView(R.id.donation_item_name)
+    TextView mDonationItemName;
+    @BindView(R.id.donation_item_address)
+    TextView mDonationItemAddress;
 
     DonationItemViewHolder(final View itemView) {
         super(itemView);
@@ -26,25 +32,16 @@ public class DonationItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final DonationItem item, final OnObjectItemClickListener<DonationItem> onObjectItemClickListener) {
-        mDonationItemIcon.setImageResource(item.getIconDrawableRes());
-        if(item.getName() != null) {
-            mDonationItemName.setText(item.getName());
-        }
-        if(item.getAddress() != null) {
-            mDonationItemAddress.setText(item.getAddress());
-        }
-        if(onObjectItemClickListener != null) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ViewCompat.postOnAnimationDelayed(view, new Runnable() {
-                        @Override
-                        public void run() {
-                            onObjectItemClickListener.onObjectItemClick(item);
-                        }
-                    }, 50);
-                }
-            });
+        Glide.with(itemView.getContext())
+                .load(item.getIconDrawableRes())
+                .into(mDonationItemIcon);
+        mDonationItemName.setText(item.getName());
+        mDonationItemAddress.setText(item.getAddress());
+
+        if (onObjectItemClickListener != null) {
+            itemView.setOnClickListener((view) -> ViewCompat.postOnAnimationDelayed(view,
+                    () -> onObjectItemClickListener.onObjectItemClick(item), Constants.SELECTABLE_VIEW_ANIMATION_DELAY)
+            );
         }
     }
 }

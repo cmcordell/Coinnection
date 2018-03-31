@@ -3,21 +3,35 @@ package personal.calebcordell.coinnection.presentation.views.portfoliodetail;
 import java.util.List;
 
 import personal.calebcordell.coinnection.domain.model.Asset;
+import personal.calebcordell.coinnection.domain.model.PortfolioAsset;
+import personal.calebcordell.coinnection.domain.model.WatchlistAsset;
+import personal.calebcordell.coinnection.presentation.views.base.BasePresenter;
 
 
 public interface PortfolioDetailContract {
     interface View {
-        void setWatchlistAssetIds(List<String> watchlistAssetIds);
+        void setPortfolioAssets(List<PortfolioAsset> portfolioAssets);
+
+        void setWatchlistAssets(List<WatchlistAsset> watchlistAssets);
+
+        void setInitialPosition(int initialPosition);
+
+        void setCurrentAsset(Asset asset, boolean assetOnWatchlist);
+
+        void goBack();
     }
 
-    interface Presenter {
-        void start();
+    abstract class Presenter extends BasePresenter<View> {
+        abstract void setPortfolioAssets(final List<PortfolioAsset> portfolioAssets);
 
-        void removeAsset(String assetId);
+        abstract void setWatchlistAssets(final List<WatchlistAsset> watchlistAssets);
 
-        void addAssetToWatchlist(final Asset asset);
-        void removeAssetFromWatchlist(final String assetId);
+        abstract void setInitialPosition(final int position);
 
-        void destroy();
+        abstract void setCurrentAssetPosition(int position);
+
+        abstract void addAssetToWatchlist();
+
+        abstract void removeAssetFromWatchlist();
     }
 }

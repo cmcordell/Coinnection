@@ -1,14 +1,16 @@
 package personal.calebcordell.coinnection.presentation.views.portfolio;
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +21,8 @@ import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,60 +38,62 @@ import personal.calebcordell.coinnection.presentation.util.OnPopUpFragmentClosed
 import personal.calebcordell.coinnection.presentation.util.portfoliorecyclerview.OnPortfolioItemDragFinishedListener;
 import personal.calebcordell.coinnection.presentation.util.portfoliorecyclerview.PortfolioItemTouchHelperCallback;
 import personal.calebcordell.coinnection.presentation.util.portfoliorecyclerview.PortfolioRecyclerViewAdapter;
-import personal.calebcordell.coinnection.presentation.views.BaseFragment;
-import personal.calebcordell.coinnection.presentation.views.MainActivity;
 import personal.calebcordell.coinnection.presentation.views.assetsearch.AssetSearchFragment;
+import personal.calebcordell.coinnection.presentation.views.base.BaseFragment;
+import personal.calebcordell.coinnection.presentation.views.mainactivity.MainActivity;
 import personal.calebcordell.coinnection.presentation.views.portfoliodetail.PortfolioDetailFragment;
 
 
 public class PortfolioFragment extends BaseFragment implements PortfolioContract.View {
     private static final String TAG = PortfolioFragment.class.getSimpleName();
 
-    private PortfolioContract.Presenter mPresenter;
-    private MainActivity mActivity;
+    @Inject
+    protected PortfolioContract.Presenter mPresenter;
 
-    private List<PortfolioAsset> mPortfolioAssets;
-    private List<WatchlistAsset> mWatchlistAssets;
+    private List<PortfolioAsset> mPortfolioAssets = new ArrayList<>();
+    private List<WatchlistAsset> mWatchlistAssets = new ArrayList<>();
 
-    @BindView(R.id.portfolio_recycler_view) protected RecyclerView mPortfolioRecyclerView;
-    private PortfolioRecyclerViewAdapter mPortfolioRecyclerViewAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
+    @BindView(R.id.portfolio_recycler_view)
+    protected RecyclerView mPortfolioRecyclerView;
+    @Inject
+    protected PortfolioRecyclerViewAdapter mPortfolioRecyclerViewAdapter;
+    @Inject
+    protected MainActivity mActivity;
+    @Inject
+    protected PortfolioItemTouchHelperCallback mCallback;
+    private ItemTouchHelper mHelper;
 
     private Unbinder mUnbinder;
+    private boolean mAnimating = false;
 
     public PortfolioFragment() {}
     public static Fragment newInstance() {
         return new PortfolioFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivity = (MainActivity) getActivity();
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_portfolio, container, false);
 
         mUnbinder = ButterKnife.bind(this, view);
 
         setHasOptionsMenu(true);
 
-        mPortfolioRecyclerViewAdapter = new PortfolioRecyclerViewAdapter(mOnObjectItemClickListener,
-                mOnItemSelectedListener, mOnDragFinishedListener, mOnTabSelectedListener);
+        mPortfolioRecyclerViewAdapter.setOnAssetItemClickListener(mOnAssetItemClickListener);
+        mPortfolioRecyclerViewAdapter.setOnAssetDragFinishedListener(mOnAssetDragFinishedListener);
+        mPortfolioRecyclerViewAdapter.setOnTimeframeTabSelectedListener(mOnTimeframeTabSelectedListener);
+        mPortfolioRecyclerViewAdapter.setOnAssetInfoSelectedListener(mOnAssetInfoSelectedListener);
+
+        mCallback.setItemTouchHelperAdapter(mPortfolioRecyclerViewAdapter);
+        mHelper = new ItemTouchHelper(mCallback);
+        mHelper.attachToRecyclerView(mPortfolioRecyclerView);
 
         mPortfolioRecyclerView.setAdapter(mPortfolioRecyclerViewAdapter);
-        ItemTouchHelper.Callback callback = new PortfolioItemTouchHelperCallback(mPortfolioRecyclerViewAdapter);
-        ItemTouchHelper helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(mPortfolioRecyclerView);
-        mLinearLayoutManager = new LinearLayoutManager(view.getContext());
-        mPortfolioRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mPortfolioRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ((SimpleItemAnimator) mPortfolioRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        mPortfolioRecyclerView.addOnScrollListener(mOnScrollListener);
-
-        mPresenter = new PortfolioPresenter(this);
-        mPresenter.start();
+//        mPortfolioRecyclerView.addOnScrollListener(mOnScrollListener);
+        mPresenter.setView(this);
 
         return view;
     }
@@ -95,36 +101,40 @@ public class PortfolioFragment extends BaseFragment implements PortfolioContract
     @Override
     public void onResume() {
         super.onResume();
+
         mActivity.setTitle(getString(R.string.title_portfolio));
         mActivity.setHomeAsUp(false);
 
-        int pastVisibleItems = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
-        if (pastVisibleItems == 0) {
-            mActivity.setActionBarElevation(0);
-        } else if (pastVisibleItems > 0) {
-            mActivity.setActionBarElevation(4);
-        }
+//        int pastVisibleItems = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
+//        if (pastVisibleItems == 0) {
+//            mActivity.setActionBarElevation(0);
+//        } else if (pastVisibleItems > 0) {
+//            mActivity.setActionBarElevation(4);
+//        }
 
         mPresenter.resume();
     }
 
     @Override
     public void onPause() {
-        mPresenter.pause();
         super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        mActivity.setActionBarElevation(4);
-        super.onStop();
+        mPresenter.pause();
     }
 
     @Override
     public void onDestroyView() {
-        mPresenter.destroy();
-        mUnbinder.unbind();
         super.onDestroyView();
+        mPresenter.destroy();
+
+        mPortfolioRecyclerViewAdapter.setOnAssetItemClickListener(null);
+        mPortfolioRecyclerViewAdapter.setOnAssetDragFinishedListener(null);
+        mPortfolioRecyclerViewAdapter.setOnTimeframeTabSelectedListener(null);
+        mPortfolioRecyclerViewAdapter.setOnAssetInfoSelectedListener(null);
+
+        mCallback.setItemTouchHelperAdapter(null);
+        mHelper.attachToRecyclerView(null);
+
+        mUnbinder.unbind();
     }
 
     @Override
@@ -134,94 +144,81 @@ public class PortfolioFragment extends BaseFragment implements PortfolioContract
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_options_portfolio, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_options_portfolio, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                openAssetSearchUI();
+                mAnimating = true;
+                ViewCompat.postOnAnimationDelayed(getView(), this::openAssetSearchUI, Constants.SELECTABLE_VIEW_ANIMATION_DELAY);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void showPortfolioAssets(List<PortfolioAsset> portfolioAssets) {
+    public void showPortfolioAssets(@NonNull List<PortfolioAsset> portfolioAssets) {
         mPortfolioAssets = portfolioAssets;
         mPortfolioRecyclerViewAdapter.setPortfolioAssets(mPortfolioAssets);
         mPortfolioRecyclerView.setVisibility(View.VISIBLE);
     }
-    public void updatePortfolioAssets(List<PortfolioAsset> portfolioAssets) {
-        mPortfolioAssets = portfolioAssets;
-        mPortfolioRecyclerViewAdapter.replacePortfolioAssets(mPortfolioAssets);
-    }
 
-    public void showWatchlistAssets(List<WatchlistAsset> watchlistAssets) {
+    public void showWatchlistAssets(@NonNull List<WatchlistAsset> watchlistAssets) {
         mWatchlistAssets = watchlistAssets;
         mPortfolioRecyclerViewAdapter.setWatchlistAssets(mWatchlistAssets);
         mPortfolioRecyclerView.setVisibility(View.VISIBLE);
     }
-    public void updateWatchlistAssets(List<WatchlistAsset> watchlistAssets) {
-        mWatchlistAssets = watchlistAssets;
-        mPortfolioRecyclerViewAdapter.replaceWatchlistAssets(mWatchlistAssets);
-    }
 
-    public void showLastUpdated(long lastUpdated) {
+    public void showLastUpdated(final long lastUpdated) {
         mPortfolioRecyclerViewAdapter.setLastUpdated(lastUpdated);
     }
 
     public void openAssetSearchUI() {
         Fragment fragment = AssetSearchFragment.newInstance(constructRevealSettings(), mOnPopUpFragmentClosedListener);
 
-        getFragmentManager().beginTransaction()
+        mFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, FragmentTransaction.TRANSIT_NONE)
                 .add(android.R.id.content, fragment, AssetSearchFragment.class.getSimpleName())
-                .addToBackStack(null)
                 .commit();
+
+        mAnimating = false;
     }
+
     public void openPortfolioDetailViewUI(Asset asset) {
         int assetPosition = -1;
 
         //Determine the position of the clicked asset so we can open it in portfoliodetailfragment
-        if(asset instanceof PortfolioAsset) {
+        if (asset instanceof PortfolioAsset) {
             int size = mPortfolioAssets.size();
-            for(int i=0; i < size; i++) {
-                if(mPortfolioAssets.get(i).getId().equals(asset.getId())) {
+            for (int i = 0; i < size; i++) {
+                if (mPortfolioAssets.get(i).getId().equals(asset.getId())) {
                     assetPosition = i;
                 }
             }
         } else {
             int size = mWatchlistAssets.size();
-            for(int i=0; i < size; i++) {
-                if(mWatchlistAssets.get(i).getId().equals(asset.getId())) {
+            for (int i = 0; i < size; i++) {
+                if (mWatchlistAssets.get(i).getId().equals(asset.getId())) {
                     assetPosition = i + mPortfolioAssets.size();
                 }
             }
         }
 
-        if(assetPosition >= 0) {
-            ArrayList<Asset> compositeList = new ArrayList<>(10);
-            if(mPortfolioAssets != null) {
-                compositeList.addAll(mPortfolioAssets);
-            }
-            if(mWatchlistAssets != null) {
-                compositeList.addAll(mWatchlistAssets);
-            }
-            //TODO change animation, expand listitem to fragment
-            getFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.animator.slide_left_enter, R.animator.slide_right_exit,
-                            R.animator.slide_right_enter, R.animator.slide_left_exit)
-                    .replace(R.id.content_frame, PortfolioDetailFragment.newInstance(assetPosition,
-                            compositeList), PortfolioDetailFragment.class.getName())
+        if (assetPosition >= 0) {
+            mFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.slide_left_enter, R.anim.slide_left_exit,
+                            R.anim.slide_right_enter, R.anim.slide_right_exit)
+                    .replace(R.id.content_frame, PortfolioDetailFragment.newInstance(new ArrayList<>(mPortfolioAssets), new ArrayList<>(mWatchlistAssets), assetPosition), PortfolioDetailFragment.class.getName())
                     .addToBackStack(null)
                     .commit();
         }
     }
 
     private void assetSearchClosed() {
-        mActivity.setSelectedFragment(this);
+        mBackHandlerInterface.setSelectedFragment(this);
     }
 
     private RevealAnimationSetting constructRevealSettings() {
@@ -229,33 +226,29 @@ public class PortfolioFragment extends BaseFragment implements PortfolioContract
         return new RevealAnimationSetting(view.getRight(), view.getTop(), view.getWidth(), view.getHeight());
     }
 
-
-    /**
-     * App bar will not have a shadow when when recyclerview is scrolled to the top
-     */
-    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-
-            int pastVisibleItems = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
-            if(pastVisibleItems  == 0) {
-                mActivity.setActionBarElevation(0);
-            } else if(pastVisibleItems > 0) {
-                mActivity.setActionBarElevation(4);
-            }
-        }
-    };
+//    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+//        @Override
+//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            super.onScrolled(recyclerView, dx, dy);
+//
+//            int pastVisibleItems = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
+//            if (pastVisibleItems == 0) {
+//                mActivity.setActionBarElevation(0);
+//            } else if (pastVisibleItems > 0) {
+//                mActivity.setActionBarElevation(4);
+//            }
+//        }
+//    };
 
     /**
      * Used to determine when an asset is clicked
      */
-    private OnObjectItemClickListener<Asset> mOnObjectItemClickListener = this::openPortfolioDetailViewUI;
+    private OnObjectItemClickListener<Asset> mOnAssetItemClickListener = this::openPortfolioDetailViewUI;
 
     /**
      * Used to determine when a spinner item has been selected
      */
-    private AdapterView.OnItemSelectedListener mOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+    private AdapterView.OnItemSelectedListener mOnAssetInfoSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             mPortfolioRecyclerViewAdapter.setAssetInfoShown(position);
@@ -271,25 +264,28 @@ public class PortfolioFragment extends BaseFragment implements PortfolioContract
         public void popUpFragmentClosed() {
             assetSearchClosed();
         }
-        @Override public int describeContents() {return 0;}
+        @Override public int describeContents() {
+            return 0;
+        }
         @Override public void writeToParcel(Parcel dest, int flags) {}
     };
 
-    private OnPortfolioItemDragFinishedListener mOnDragFinishedListener = new OnPortfolioItemDragFinishedListener() {
+    private OnPortfolioItemDragFinishedListener mOnAssetDragFinishedListener = new OnPortfolioItemDragFinishedListener() {
         @Override
         public void onDragFinished(List<PortfolioAsset> portfolioAssets, List<WatchlistAsset> watchlistAssets) {
-            if(!mPortfolioAssets.equals(portfolioAssets)) {
+            if (!mPortfolioAssets.equals(portfolioAssets)) {
                 mPresenter.reorderPortfolioAssets(portfolioAssets);
             }
-            if(!mWatchlistAssets.equals(watchlistAssets)) {
+            if (!mWatchlistAssets.equals(watchlistAssets)) {
                 mPresenter.reorderWatchlistAssets(watchlistAssets);
             }
         }
     };
 
-    private TabLayout.OnTabSelectedListener mOnTabSelectedListener = new TabLayout.OnTabSelectedListener() {
-        @Override public void onTabSelected(TabLayout.Tab tab) {
-            switch(tab.getPosition()) {
+    private TabLayout.OnTabSelectedListener mOnTimeframeTabSelectedListener = new TabLayout.OnTabSelectedListener() {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            switch (tab.getPosition()) {
                 case 0:
                     mPortfolioRecyclerViewAdapter.setTimeframe(Constants.TIMEFRAME_HOUR);
                     break;
@@ -310,11 +306,11 @@ public class PortfolioFragment extends BaseFragment implements PortfolioContract
                     break;
             }
         }
-        @Override public void onTabUnselected(TabLayout.Tab tab) {
 
-        }
-        @Override public void onTabReselected(TabLayout.Tab tab) {
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {}
 
-        }
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {}
     };
 }

@@ -3,16 +3,17 @@ package personal.calebcordell.coinnection.presentation;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 
 import personal.calebcordell.coinnection.domain.model.animation.RevealAnimationSetting;
-import personal.calebcordell.coinnection.presentation.util.OnDismissedListener;
 
 
 public class AnimationUtils {
+    public static boolean isAnimating = false;
+
     public static void registerCircularRevealAnimation(final Context context, final View view, final RevealAnimationSetting revealSettings) {
         view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -47,9 +48,20 @@ public class AnimationUtils {
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                listener.onDismissed();
+                super.onAnimationEnd(animation);
+                ViewCompat.postOnAnimationDelayed(view, () -> {
+                    view.setDrawingCacheEnabled(false);
+                    listener.onDismissed();
+                    isAnimating = false;
+                }, Constants.SELECTABLE_VIEW_ANIMATION_DELAY);
             }
         });
+        isAnimating = true;
+        view.setDrawingCacheEnabled(true);
         anim.start();
+    }
+
+    public interface OnDismissedListener {
+        void onDismissed();
     }
 }

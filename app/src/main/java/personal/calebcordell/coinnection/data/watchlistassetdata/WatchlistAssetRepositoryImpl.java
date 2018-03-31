@@ -4,9 +4,11 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import personal.calebcordell.coinnection.data.assetdata.AssetMapper;
@@ -15,6 +17,7 @@ import personal.calebcordell.coinnection.domain.model.WatchlistAsset;
 import personal.calebcordell.coinnection.domain.repository.WatchlistAssetRepository;
 
 
+@Singleton
 public class WatchlistAssetRepositoryImpl implements WatchlistAssetRepository {
     private String TAG = WatchlistAssetRepositoryImpl.class.getSimpleName();
 
@@ -22,10 +25,13 @@ public class WatchlistAssetRepositoryImpl implements WatchlistAssetRepository {
     private final AssetNetworkDataStore mAssetNetworkDataStore;
     private final AssetMapper mAssetMapper;
 
-    public WatchlistAssetRepositoryImpl() {
-        mWatchlistAssetDiskDataStore = WatchlistAssetDiskDataStore.getInstance();
-        mAssetNetworkDataStore = AssetNetworkDataStore.getInstance();
-        mAssetMapper = new AssetMapper();
+    @Inject
+    public WatchlistAssetRepositoryImpl(WatchlistAssetDiskDataStore watchlistAssetDiskDataStore,
+                                        AssetNetworkDataStore assetNetworkDataStore,
+                                        AssetMapper assetMapper) {
+        mWatchlistAssetDiskDataStore = watchlistAssetDiskDataStore;
+        mAssetNetworkDataStore = assetNetworkDataStore;
+        mAssetMapper = assetMapper;
     }
 
 
@@ -34,27 +40,33 @@ public class WatchlistAssetRepositoryImpl implements WatchlistAssetRepository {
     }
 
 
-    public Completable reorderWatchlist(@NonNull List<WatchlistAsset> watchlistAssetsInOrder) {
+    public Completable reorderWatchlist(@NonNull final List<WatchlistAsset> watchlistAssetsInOrder) {
         return mWatchlistAssetDiskDataStore.replaceAll(watchlistAssetsInOrder);
     }
 
 
-    public Completable addAssetToWatchlist(@NonNull WatchlistAsset watchlistAsset) {
+    public Completable addAssetToWatchlist(@NonNull final WatchlistAsset watchlistAsset) {
         return mWatchlistAssetDiskDataStore.storeSingular(watchlistAsset);
     }
-    public Completable removeAssetFromWatchlist(@NonNull String id) {
+
+    public Completable removeAssetFromWatchlist(@NonNull final String id) {
         return mWatchlistAssetDiskDataStore.removeSingular(id);
     }
 
+    public Completable removeAssetsFromWatchlist(@NonNull final List<String> ids) {
+        return mWatchlistAssetDiskDataStore.removeMultiple(ids);
+    }
 
-    public Single<Boolean> isAssetOnWatchlist(@NonNull String id) {
+
+    public Single<Boolean> isAssetOnWatchlist(@NonNull final String id) {
         return mWatchlistAssetDiskDataStore.isAssetOnWatchlist(id);
     }
 
 
-    public Flowable<WatchlistAsset> getWatchlistAsset(@NonNull String id) {
+    public Flowable<WatchlistAsset> getWatchlistAsset(@NonNull final String id) {
         return mWatchlistAssetDiskDataStore.getSingular(id);
     }
+
     public Flowable<List<WatchlistAsset>> getAllWatchlistAssets() {
         return mWatchlistAssetDiskDataStore.getAll();
     }
@@ -65,22 +77,14 @@ public class WatchlistAssetRepositoryImpl implements WatchlistAssetRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .flatMap(mAssetNetworkDataStore::assets)
-                .flatMapObservable(Observable::fromIterable)
+//                .flatMapObservable(Observable::fromIterable)
                 .map(mAssetMapper::mapUp)
-                .toList()
+//                .toList()
                 .doOnSuccess(mWatchlistAssetDiskDataStore::updateAll)
                 .toCompletable();
-
-//        return mAssetNetworkDataStore.assets(mWatchlistAssetDiskDataStore.getAllIds())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(Schedulers.computation())
-//                .flatMapObservable(Observable::fromIterable)
-//                .map(mAssetMapper::mapUp)
-//                .toList()
-//                .doOnSuccess(mWatchlistAssetDiskDataStore::updateAll)
-//                .toCompletable();
     }
-    public Completable fetchWatchlistAsset(@NonNull String id) {
+
+    public Completable fetchWatchlistAsset(@NonNull final String id) {
         return mAssetNetworkDataStore.asset(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())

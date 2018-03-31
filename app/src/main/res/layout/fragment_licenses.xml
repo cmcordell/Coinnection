@@ -1,0 +1,17 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/licenses_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground"
+        android:clipToPadding="false"
+        android:fadeScrollbars="true"
+        android:overScrollMode="never"
+        android:paddingBottom="16dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay" />
+</FrameLayout>

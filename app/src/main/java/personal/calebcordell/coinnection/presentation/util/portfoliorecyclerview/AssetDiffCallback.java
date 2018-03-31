@@ -2,7 +2,6 @@ package personal.calebcordell.coinnection.presentation.util.portfoliorecyclervie
 
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
-import android.util.Log;
 
 import java.util.List;
 

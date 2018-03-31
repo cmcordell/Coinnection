@@ -10,7 +10,7 @@ public abstract class FlowableInteractor<REQUEST_DATA, RESPONSE_DATA> {
     protected abstract Flowable<RESPONSE_DATA> buildFlowable(REQUEST_DATA requestData);
 
     public Disposable execute(REQUEST_DATA requestData, DisposableSubscriber<RESPONSE_DATA> interactorSubscriber) {
-        if(interactorSubscriber == null) {
+        if (interactorSubscriber == null) {
             return this.buildFlowable(requestData).subscribe();
         }
         return this.buildFlowable(requestData).subscribeWith(interactorSubscriber);

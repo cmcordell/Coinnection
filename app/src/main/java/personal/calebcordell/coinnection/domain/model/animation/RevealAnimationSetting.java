@@ -21,12 +21,15 @@ public class RevealAnimationSetting implements Parcelable {
     public int getCenterX() {
         return mCenterX;
     }
+
     public int getCenterY() {
         return mCenterY;
     }
+
     public int getWidth() {
         return mWidth;
     }
+
     public int getHeight() {
         return mHeight;
     }
@@ -42,16 +45,19 @@ public class RevealAnimationSetting implements Parcelable {
         out.writeInt(mWidth);
         out.writeInt(mHeight);
     }
+
     protected RevealAnimationSetting(Parcel in) {
         mCenterX = in.readInt();
         mCenterY = in.readInt();
         mWidth = in.readInt();
         mHeight = in.readInt();
     }
+
     @Override
     public int describeContents() {
         return 0;
     }
+
     public static final Parcelable.Creator<RevealAnimationSetting> CREATOR = new Parcelable.Creator<RevealAnimationSetting>() {
         @Override
         public RevealAnimationSetting createFromParcel(Parcel in) {

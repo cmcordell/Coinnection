@@ -1,6 +1,9 @@
 package personal.calebcordell.coinnection.presentation.views.assetdetail;
 
+import android.support.annotation.NonNull;
+
 import personal.calebcordell.coinnection.domain.model.Asset;
+import personal.calebcordell.coinnection.presentation.views.base.BasePresenter;
 
 
 public interface AssetDetailContract {
@@ -10,17 +13,31 @@ public interface AssetDetailContract {
         void showAssetInPortfolio(boolean isInPortfolio);
 
         void showAssetOnWatchlist(boolean isOnWatchlist);
+
+        void openEditPortfolioAssetUI(@NonNull Asset asset);
+
+        void openAddPortfolioAssetUI(@NonNull Asset asset);
+
+        void openRemovePortfolioAssetUI();
     }
 
-    interface Presenter {
-        void start(String assetId);
+    abstract class Presenter extends BasePresenter<View> {
+        abstract void setAsset(Asset asset);
 
-        void addAssetToPortfolio(Asset asset, double balance);
-        void removeAssetFromPortfolio(String assetId);
+        abstract void onEditPortfolioAssetClicked();
 
-        void addAssetToWatchlist(Asset asset);
-        void removeAssetFromWatchlist(String assetId);
+        abstract void onAddAssetToPortfolioClicked();
 
-        void destroy();
+        abstract void onRemoveAssetFromPortfolioClicked();
+
+        abstract void editAssetBalance(double balance);
+
+        abstract void addAssetToPortfolio(double balance);
+
+        abstract void removeAssetFromPortfolio();
+
+        abstract void addAssetToWatchlist();
+
+        abstract void removeAssetFromWatchlist();
     }
 }

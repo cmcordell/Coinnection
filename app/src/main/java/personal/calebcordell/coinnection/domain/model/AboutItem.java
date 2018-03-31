@@ -20,7 +20,9 @@ public class AboutItem {
         this.iconDrawable = iconDrawable;
         return this;
     }
-    @Nullable public Drawable getIconDrawable() {
+
+    @Nullable
+    public Drawable getIconDrawable() {
         return iconDrawable;
     }
 
@@ -28,7 +30,9 @@ public class AboutItem {
         this.title = title;
         return this;
     }
-    @Nullable public String getTitle() {
+
+    @Nullable
+    public String getTitle() {
         return title;
     }
 
@@ -36,6 +40,7 @@ public class AboutItem {
         this.onClickListener = onClickListener;
         return this;
     }
+
     public View.OnClickListener getOnClickListener() {
         return onClickListener;
     }

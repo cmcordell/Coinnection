@@ -16,39 +16,142 @@
         <item>@string/name_header</item>
     </string-array>
 
+    <string-array name="currency_codes">
+        <item>@string/currency_code_aud</item>
+        <item>@string/currency_code_brl</item>
+        <item>@string/currency_code_cad</item>
+        <item>@string/currency_code_chf</item>
+        <item>@string/currency_code_clp</item>
+        <item>@string/currency_code_cny</item>
+        <item>@string/currency_code_czk</item>
+        <item>@string/currency_code_dkk</item>
+        <item>@string/currency_code_eur</item>
+        <item>@string/currency_code_gbp</item>
+        <item>@string/currency_code_hkd</item>
+        <item>@string/currency_code_huf</item>
+        <item>@string/currency_code_idr</item>
+        <item>@string/currency_code_ils</item>
+        <item>@string/currency_code_inr</item>
+        <item>@string/currency_code_jpy</item>
+        <item>@string/currency_code_krw</item>
+        <item>@string/currency_code_mxn</item>
+        <item>@string/currency_code_myr</item>
+        <item>@string/currency_code_nok</item>
+        <item>@string/currency_code_nzd</item>
+        <item>@string/currency_code_php</item>
+        <item>@string/currency_code_pkr</item>
+        <item>@string/currency_code_pln</item>
+        <item>@string/currency_code_rub</item>
+        <item>@string/currency_code_sek</item>
+        <item>@string/currency_code_sgd</item>
+        <item>@string/currency_code_thb</item>
+        <item>@string/currency_code_try</item>
+        <item>@string/currency_code_twd</item>
+        <item>@string/currency_code_usd</item>
+        <item>@string/currency_code_zar</item>
+    </string-array>
+    <string-array name="currency_names">
+        <item>@string/currency_name_aud</item>
+        <item>@string/currency_name_brl</item>
+        <item>@string/currency_name_cad</item>
+        <item>@string/currency_name_chf</item>
+        <item>@string/currency_name_clp</item>
+        <item>@string/currency_name_cny</item>
+        <item>@string/currency_name_czk</item>
+        <item>@string/currency_name_dkk</item>
+        <item>@string/currency_name_eur</item>
+        <item>@string/currency_name_gbp</item>
+        <item>@string/currency_name_hkd</item>
+        <item>@string/currency_name_huf</item>
+        <item>@string/currency_name_idr</item>
+        <item>@string/currency_name_ils</item>
+        <item>@string/currency_name_inr</item>
+        <item>@string/currency_name_jpy</item>
+        <item>@string/currency_name_krw</item>
+        <item>@string/currency_name_mxn</item>
+        <item>@string/currency_name_myr</item>
+        <item>@string/currency_name_nok</item>
+        <item>@string/currency_name_nzd</item>
+        <item>@string/currency_name_php</item>
+        <item>@string/currency_name_pkr</item>
+        <item>@string/currency_name_pln</item>
+        <item>@string/currency_name_rub</item>
+        <item>@string/currency_name_sek</item>
+        <item>@string/currency_name_sgd</item>
+        <item>@string/currency_name_thb</item>
+        <item>@string/currency_name_try</item>
+        <item>@string/currency_name_twd</item>
+        <item>@string/currency_name_usd</item>
+        <item>@string/currency_name_zar</item>
+    </string-array>
+
     <string-array name="pref_currency_entries">
         <item>@string/currency_aud</item>
         <item>@string/currency_brl</item>
         <item>@string/currency_cad</item>
         <item>@string/currency_chf</item>
+        <item>@string/currency_clp</item>
         <item>@string/currency_cny</item>
+        <item>@string/currency_czk</item>
+        <item>@string/currency_dkk</item>
         <item>@string/currency_eur</item>
         <item>@string/currency_gbp</item>
         <item>@string/currency_hkd</item>
+        <item>@string/currency_huf</item>
         <item>@string/currency_idr</item>
+        <item>@string/currency_ils</item>
         <item>@string/currency_inr</item>
         <item>@string/currency_jpy</item>
         <item>@string/currency_krw</item>
         <item>@string/currency_mxn</item>
+        <item>@string/currency_myr</item>
+        <item>@string/currency_nok</item>
+        <item>@string/currency_nzd</item>
+        <item>@string/currency_php</item>
+        <item>@string/currency_pkr</item>
+        <item>@string/currency_pln</item>
         <item>@string/currency_rub</item>
+        <item>@string/currency_sek</item>
+        <item>@string/currency_sgd</item>
+        <item>@string/currency_thb</item>
+        <item>@string/currency_try</item>
+        <item>@string/currency_twd</item>
         <item>@string/currency_usd</item>
+        <item>@string/currency_zar</item>
     </string-array>
     <string-array name="pref_currency_values">
         <item>aud</item>
         <item>brl</item>
         <item>cad</item>
         <item>chf</item>
+        <item>clp</item>
         <item>cny</item>
+        <item>czk</item>
+        <item>dkk</item>
         <item>eur</item>
         <item>gbp</item>
         <item>hkd</item>
+        <item>huf</item>
         <item>idr</item>
+        <item>ils</item>
         <item>inr</item>
         <item>jpy</item>
         <item>krw</item>
         <item>mxn</item>
+        <item>myr</item>
+        <item>nok</item>
+        <item>nzd</item>
+        <item>php</item>
+        <item>pkr</item>
+        <item>pln</item>
         <item>rub</item>
+        <item>sek</item>
+        <item>sgd</item>
+        <item>thb</item>
+        <item>try</item>
+        <item>twd</item>
         <item>usd</item>
+        <item>zar</item>
     </string-array>
 
     <string-array name="pref_app_theme_entries">
@@ -60,61 +163,73 @@
         <item>dark</item>
     </string-array>
 
-    <string-array name="pref_data_refresh_entries">
-        <item>Every Day</item>
-        <item>Every 2 Days</item>
-        <item>Every 3 Days</item>
-        <item>Every Week</item>
-        <item>Every Month</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_data_refresh_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>7</item>
-        <item>30</item>
-        <item>0</item>
-    </string-array>
-    
     <string-array name="donation_wallet_names">
         <item>@string/wallet_name_bitcoin</item>
         <item>@string/wallet_name_bitcoin_cash</item>
+        <item>@string/wallet_name_bitcoin_gold</item>
         <item>@string/wallet_name_dash</item>
-        <item>@string/wallet_name_dogecoin</item>
+        <item>@string/wallet_name_decred</item>
         <item>@string/wallet_name_eth_classic</item>
         <item>@string/wallet_name_ethereum</item>
         <item>@string/wallet_name_litecoin</item>
-        <item>@string/wallet_name_zcash</item>
+        <item>@string/wallet_name_vertcoin</item>
     </string-array>
     <string-array name="donation_wallet_addresses">
         <item>@string/wallet_address_bitcoin</item>
         <item>@string/wallet_address_bitcoin_cash</item>
+        <item>@string/wallet_address_bitcoin_gold</item>
         <item>@string/wallet_address_dash</item>
-        <item>@string/wallet_address_dogecoin</item>
+        <item>@string/wallet_address_decred</item>
         <item>@string/wallet_address_eth_classic</item>
         <item>@string/wallet_address_ethereum</item>
         <item>@string/wallet_address_litecoin</item>
-        <item>@string/wallet_address_zcash</item>
+        <item>@string/wallet_address_vertcoin</item>
     </string-array>
     <integer-array name="donation_wallet_icons">
         <item>@drawable/ic_asset_bitcoin</item>
         <item>@drawable/ic_asset_bitcoin_cash</item>
+        <item>@drawable/ic_asset_bitcoin_gold</item>
         <item>@drawable/ic_asset_dash</item>
-        <item>@drawable/ic_asset_dogecoin</item>
+        <item>@drawable/ic_asset_decred</item>
         <item>@drawable/ic_asset_eth_classic</item>
         <item>@drawable/ic_asset_ethereum</item>
         <item>@drawable/ic_asset_litecoin</item>
-        <item>@drawable/ic_asset_zcash</item>
+        <item>@drawable/ic_asset_vertcoin</item>
     </integer-array>
     <integer-array name="donation_wallet_qrcodes">
         <item>@drawable/wallet_address_qrcode_bitcoin</item>
         <item>@drawable/wallet_address_qrcode_bitcoin_cash</item>
+        <item>@drawable/wallet_address_qrcode_bitcoin_gold</item>
         <item>@drawable/wallet_address_qrcode_dash</item>
-        <item>@drawable/wallet_address_qrcode_dogecoin</item>
+        <item>@drawable/wallet_address_qrcode_decred</item>
         <item>@drawable/wallet_address_qrcode_eth_classic</item>
         <item>@drawable/wallet_address_qrcode_ethereum</item>
         <item>@drawable/wallet_address_qrcode_litecoin</item>
-        <item>@drawable/wallet_address_qrcode_zcash</item>
+        <item>@drawable/ic_asset_vertcoin</item>
     </integer-array>
+
+    <string-array name="license_titles">
+        <item>@string/butterknife_license_title</item>
+        <item>@string/icons_license_title</item>
+        <item>@string/dagger_license_title</item>
+        <item>@string/glide_license_title</item>
+        <item>@string/gson_license_title</item>
+        <item>@string/mpandroidchart_license_title</item>
+        <item>@string/okhttp_license_title</item>
+        <item>@string/retrofit_license_title</item>
+        <item>@string/rxandroid_license_title</item>
+        <item>@string/rxjava_license_title</item>
+    </string-array>
+    <string-array name="license_texts">
+        <item>@string/butterknife_license_text</item>
+        <item>@string/icons_license_text</item>
+        <item>@string/dagger_license_text</item>
+        <item>@string/glide_license_text</item>
+        <item>@string/gson_license_text</item>
+        <item>@string/mpandroidchart_license_text</item>
+        <item>@string/okhttp_license_text</item>
+        <item>@string/retrofit_license_text</item>
+        <item>@string/rxandroid_license_text</item>
+        <item>@string/rxjava_license_text</item>
+    </string-array>
 </resources>

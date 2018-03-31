@@ -1,20 +1,31 @@
 package personal.calebcordell.coinnection.data.portfolioassetdata;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import personal.calebcordell.coinnection.data.base.BaseMapper;
+import personal.calebcordell.coinnection.domain.model.LogoUtil;
 import personal.calebcordell.coinnection.domain.model.PortfolioAsset;
 
 
+@Singleton
 public class PortfolioAssetMapper extends BaseMapper<PortfolioAsset, PortfolioAssetEntity> {
-    
+
+
+    @Inject
+    public PortfolioAssetMapper() {
+    }
+
     public PortfolioAsset mapUp(PortfolioAssetEntity entity) {
         PortfolioAsset portfolioAsset = new PortfolioAsset();
-        
+
         portfolioAsset.setId(entity.getId());
         portfolioAsset.setBalance(entity.getBalance());
         portfolioAsset.setPosition(entity.getPosition());
         portfolioAsset.setName(entity.getName());
         portfolioAsset.setSymbol(entity.getSymbol());
         portfolioAsset.setRank(entity.getRank());
+        portfolioAsset.setLogo(LogoUtil.getLogo(entity.getId()));
         portfolioAsset.setPrice(entity.getPrice());
         portfolioAsset.setVolume24Hour(entity.getVolume24Hour());
         portfolioAsset.setMarketCap(entity.getMarketCap());
@@ -24,10 +35,10 @@ public class PortfolioAssetMapper extends BaseMapper<PortfolioAsset, PortfolioAs
         portfolioAsset.setPercentChange24Hour(entity.getPercentChange24h());
         portfolioAsset.setPercentChange7Day(entity.getPercentChange7d());
         portfolioAsset.setLastUpdated(entity.getLastUpdated());
-        
+
         return portfolioAsset;
     }
-    
+
     public PortfolioAssetEntity mapDown(PortfolioAsset asset) {
         PortfolioAssetEntity portfolioAssetEntity = new PortfolioAssetEntity(asset.getId());
 

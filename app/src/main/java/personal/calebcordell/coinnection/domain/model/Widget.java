@@ -2,16 +2,17 @@ package personal.calebcordell.coinnection.domain.model;
 
 
 public class Widget {
-    private int mAppWidgetId;
+    private int id;
 
-    public Widget(int appWidgetId) {
-        mAppWidgetId = appWidgetId;
+    public Widget(int id) {
+        this.id = id;
     }
 
-    public int getAppWidgetId() {
-        return mAppWidgetId;
+    public int getId() {
+        return id;
     }
-    public void setAppWidgetId(int appWidgetId) {
-        mAppWidgetId = appWidgetId;
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

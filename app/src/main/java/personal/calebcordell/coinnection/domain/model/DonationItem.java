@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 
 public class DonationItem implements Parcelable {
-    
+
     private String name;
     private String address;
     private int iconDrawableRes;
@@ -27,7 +27,9 @@ public class DonationItem implements Parcelable {
         this.iconDrawableRes = iconDrawableRes;
         return this;
     }
-    public @DrawableRes int getIconDrawableRes() {
+
+    public @DrawableRes
+    int getIconDrawableRes() {
         return iconDrawableRes;
     }
 
@@ -35,7 +37,9 @@ public class DonationItem implements Parcelable {
         this.qrcodeDrawableRes = qrcodeDrawableRes;
         return this;
     }
-    public @DrawableRes int getQRCodeDrawableRes() {
+
+    public @DrawableRes
+    int getQRCodeDrawableRes() {
         return qrcodeDrawableRes;
     }
 
@@ -43,7 +47,9 @@ public class DonationItem implements Parcelable {
         this.name = name;
         return this;
     }
-    @NonNull public String getName() {
+
+    @NonNull
+    public String getName() {
         return name;
     }
 
@@ -51,10 +57,12 @@ public class DonationItem implements Parcelable {
         this.address = address;
         return this;
     }
-    @NonNull public String getAddress() {
+
+    @NonNull
+    public String getAddress() {
         return address;
     }
-    
+
     public static DonationItem Empty() {
         return new DonationItem(-1, -1, "", "");
     }
@@ -62,26 +70,34 @@ public class DonationItem implements Parcelable {
     /**
      * Parcelable implementation.  Allows assets to be moved easily between fragments/activities
      */
-    @Override public void writeToParcel(Parcel out, int flags) {
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);
         out.writeString(address);
         out.writeInt(iconDrawableRes);
         out.writeInt(qrcodeDrawableRes);
     }
+
     protected DonationItem(Parcel in) {
         name = in.readString();
         address = in.readString();
         iconDrawableRes = in.readInt();
         qrcodeDrawableRes = in.readInt();
     }
-    @Override public int describeContents() {
+
+    @Override
+    public int describeContents() {
         return 0;
     }
+
     public static final Parcelable.Creator<DonationItem> CREATOR = new Parcelable.Creator<DonationItem>() {
-        @Override public DonationItem createFromParcel(Parcel in) {
+        @Override
+        public DonationItem createFromParcel(Parcel in) {
             return new DonationItem(in);
         }
-        @Override public DonationItem[] newArray(int size) {
+
+        @Override
+        public DonationItem[] newArray(int size) {
             return new DonationItem[size];
         }
     };

@@ -1,28 +1,35 @@
 package personal.calebcordell.coinnection.data.globalmarketdata;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import personal.calebcordell.coinnection.domain.model.GlobalMarketData;
 import personal.calebcordell.coinnection.domain.repository.GlobalMarketDataRepository;
 
-import io.reactivex.Flowable;
 
-
+@Singleton
 public class GlobalMarketDataRepositoryImpl implements GlobalMarketDataRepository {
 
-    private GlobalMarketDiskDataStore mGlobalMarketDiskDataStore;
-    private GlobalMarketNetworkDataStore mGlobalMarketNetworkDataStore;
-    private GlobalMarketDataMapperFunction mGlobalMarketDataMapperFunction;
+    private final GlobalMarketDiskDataStore mGlobalMarketDiskDataStore;
+    private final GlobalMarketNetworkDataStore mGlobalMarketNetworkDataStore;
+    private final GlobalMarketDataMapperFunction mGlobalMarketDataMapperFunction;
 
-    public GlobalMarketDataRepositoryImpl() {
-        mGlobalMarketDiskDataStore = GlobalMarketDiskDataStore.getInstance();
-        mGlobalMarketNetworkDataStore = GlobalMarketNetworkDataStore.getInstance();
-        mGlobalMarketDataMapperFunction = new GlobalMarketDataMapperFunction();
+
+    @Inject
+    public GlobalMarketDataRepositoryImpl(GlobalMarketDiskDataStore globalMarketDiskDataStore,
+                                          GlobalMarketNetworkDataStore globalMarketNetworkDataStore,
+                                          GlobalMarketDataMapperFunction globalMarketDataMapperFunction) {
+        mGlobalMarketDiskDataStore = globalMarketDiskDataStore;
+        mGlobalMarketNetworkDataStore = globalMarketNetworkDataStore;
+        mGlobalMarketDataMapperFunction = globalMarketDataMapperFunction;
     }
 
 
     public Flowable<GlobalMarketData> getGlobalMarketData() {
-        return mGlobalMarketDiskDataStore.getSingular("1");
+        return mGlobalMarketDiskDataStore.getSingular();
     }
 
     public Completable fetchGlobalMarketData() {

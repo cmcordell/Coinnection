@@ -1,63 +1,57 @@
 package personal.calebcordell.coinnection.presentation.views.settings;
 
-import io.reactivex.disposables.CompositeDisposable;
+import javax.inject.Inject;
+
 import io.reactivex.observers.DisposableCompletableObserver;
-import personal.calebcordell.coinnection.presentation.App;
 import personal.calebcordell.coinnection.domain.interactor.impl.CurrencyChangedInteractor;
-import personal.calebcordell.coinnection.domain.interactor.impl.FetchAllAssetsInteractor;
+import personal.calebcordell.coinnection.domain.interactor.impl.assetinteractors.FetchAllAssetsInteractor;
 
 
-class SettingsPresenter implements SettingsContract.Presenter {
+class SettingsPresenter extends SettingsContract.Presenter {
     private static final String TAG = SettingsPresenter.class.getSimpleName();
 
-    private SettingsContract.View mView;
+    private CurrencyChangedInteractor mCurrencyChangedInteractor;
+    private FetchAllAssetsInteractor mFetchAllAssetsInteractor;
 
-    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-    private CurrencyChangedInteractor mCurrencyChangedInteractor = new CurrencyChangedInteractor();
-    private FetchAllAssetsInteractor mFetchAllAssetsInteractor = new FetchAllAssetsInteractor();
-
-    SettingsPresenter(SettingsContract.View view) {
-        if(view != null) {
-            this.mView = view;
-        }
+    @Inject
+    SettingsPresenter(CurrencyChangedInteractor currencyChangedInteractor,
+                      FetchAllAssetsInteractor fetchAllAssetsInteractor) {
+        mCurrencyChangedInteractor = currencyChangedInteractor;
+        mFetchAllAssetsInteractor = fetchAllAssetsInteractor;
     }
 
+    @Override
+    public void initialize() {}
+
+    @Override
     public void onCurrencyPreferenceChanged() {
-        mCompositeDisposable.add(mCurrencyChangedInteractor
-                .execute(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-                }));
+        mCurrencyChangedInteractor.execute(new DisposableCompletableObserver() {
+                    @Override public void onComplete() {}
+                    @Override public void onError(Throwable e) {}
+                });
     }
 
+    @Override
     public void onForceUpdatePreferenceClicked() {
         mView.showForceUpdateDialog();
     }
 
+    @Override
     public void forceUpdate() {
-        App.showToast("Starting data refresh...");
-        mCompositeDisposable.add(mFetchAllAssetsInteractor
+        mView.showMessage("Starting data refresh...");
+        mFetchAllAssetsInteractor
                 .execute(true, new DisposableCompletableObserver() {
                     @Override
                     public void onComplete() {
-                        App.showToast("Data refresh complete");
+                        mView.showMessage("Data refresh complete");
                     }
-
                     @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-                }));
+                    public void onError(Throwable e) {}
+                });
     }
 
+    @Override
     public void destroy() {
-        mCompositeDisposable.dispose();
+        super.destroy();
     }
 }

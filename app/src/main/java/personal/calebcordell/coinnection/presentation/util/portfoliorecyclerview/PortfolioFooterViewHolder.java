@@ -15,8 +15,10 @@ import personal.calebcordell.coinnection.R;
 
 public class PortfolioFooterViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.last_update_text) TextView mLastUpdateTextView;
-    @BindString(R.string.last_updated_label) String mLastUpdateLabel;
+    @BindView(R.id.last_update_text)
+    TextView mLastUpdateTextView;
+    @BindString(R.string.last_updated_label)
+    String mLastUpdateLabel;
 
     PortfolioFooterViewHolder(final View itemView) {
         super(itemView);

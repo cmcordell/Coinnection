@@ -1,24 +1,25 @@
 package personal.calebcordell.coinnection.domain.interactor.impl;
 
+import javax.inject.Inject;
+
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import personal.calebcordell.coinnection.data.assetdata.AssetRepositoryImpl;
-import personal.calebcordell.coinnection.data.globalmarketdata.GlobalMarketDataRepositoryImpl;
 import personal.calebcordell.coinnection.domain.interactor.base.CompletableInteractor1;
 import personal.calebcordell.coinnection.domain.repository.AssetRepository;
 import personal.calebcordell.coinnection.domain.repository.GlobalMarketDataRepository;
-
-import io.reactivex.Completable;
 
 
 public class CurrencyChangedInteractor extends CompletableInteractor1 {
     private static final String TAG = CurrencyChangedInteractor.class.getSimpleName();
 
-    private AssetRepository mAssetRepository;
-    private GlobalMarketDataRepository mGlobalMarketDataRepository;
+    private final AssetRepository mAssetRepository;
+    private final GlobalMarketDataRepository mGlobalMarketDataRepository;
 
-    public CurrencyChangedInteractor() {
-        mAssetRepository = new AssetRepositoryImpl();
-        mGlobalMarketDataRepository = new GlobalMarketDataRepositoryImpl();
+    @Inject
+    public CurrencyChangedInteractor(AssetRepository assetRepository,
+                                     GlobalMarketDataRepository globalMarketDataRepository) {
+        mAssetRepository = assetRepository;
+        mGlobalMarketDataRepository = globalMarketDataRepository;
     }
 
     protected Completable buildCompletable() {

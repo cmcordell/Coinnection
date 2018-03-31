@@ -19,6 +19,8 @@ public interface WatchlistAssetRepository {
 
     Completable removeAssetFromWatchlist(@NonNull String id);
 
+    Completable removeAssetsFromWatchlist(@NonNull List<String> ids);
+
     Single<Boolean> isAssetOnWatchlist(@NonNull String id);
 
     Flowable<WatchlistAsset> getWatchlistAsset(@NonNull String id);

@@ -50,11 +50,10 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
 
-        if(isDragging) {
+        if (isDragging) {
             mAdapter.onDragFinished();
             isDragging = false;
-        }
-        else if(isSwiping) {
+        } else if (isSwiping) {
             //Do something
             isSwiping = false;
         }

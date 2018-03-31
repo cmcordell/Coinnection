@@ -1,25 +1,26 @@
 package personal.calebcordell.coinnection.presentation.views.assetdetail;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import javax.inject.Inject;
 
 import butterknife.BindDrawable;
 import butterknife.BindString;
@@ -29,40 +30,50 @@ import butterknife.Unbinder;
 import personal.calebcordell.coinnection.R;
 import personal.calebcordell.coinnection.domain.model.Asset;
 import personal.calebcordell.coinnection.domain.model.PortfolioAsset;
-import personal.calebcordell.coinnection.presentation.App;
 import personal.calebcordell.coinnection.presentation.Constants;
+import personal.calebcordell.coinnection.presentation.Preferences;
 import personal.calebcordell.coinnection.presentation.util.assetrecyclerview.AssetRecyclerViewAdapter;
-import personal.calebcordell.coinnection.presentation.views.BaseFragment;
-import personal.calebcordell.coinnection.presentation.views.EditBalanceDialogFragment;
-import personal.calebcordell.coinnection.presentation.views.MainActivity;
+import personal.calebcordell.coinnection.presentation.views.base.BaseFragment;
+import personal.calebcordell.coinnection.presentation.views.editbalancedialog.EditBalanceDialogFragment;
+import personal.calebcordell.coinnection.presentation.views.mainactivity.MainActivity;
 
 
 public class AssetDetailFragment extends BaseFragment implements AssetDetailContract.View {
     private static final String TAG = AssetDetailFragment.class.getSimpleName();
 
-    private static final int TARGET_EDIT_ADD = 0;
+    private static final int TARGET_ADD = 0;
+    private static final int TARGET_EDIT = 1;
 
-    private MainActivity mActivity;
-    private AssetDetailContract.Presenter mPresenter;
+    @Inject
+    protected MainActivity mActivity;
+    @Inject
+    protected AssetDetailContract.Presenter mPresenter;
+    @Inject
+    protected Preferences mPreferences;
 
-    @BindView(R.id.asset_recycler_view) protected RecyclerView mAssetRecyclerView;
-    private AssetRecyclerViewAdapter mAssetRecyclerViewAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
+    @BindView(R.id.asset_recycler_view)
+    protected RecyclerView mAssetRecyclerView;
+    @Inject
+    protected AssetRecyclerViewAdapter mAssetRecyclerViewAdapter;
+    protected LinearLayoutManager mLinearLayoutManager;
 
-    @BindString(R.string.title_remove_portfolio_asset) String mRemoveAssetTitleString;
-    @BindString(R.string.remove_portfolio_asset_text) String mRemoveAssetTextString;
+    @BindString(R.string.title_remove_portfolio_asset)
+    String mRemoveAssetTitleString;
+    @BindString(R.string.remove_portfolio_asset_text)
+    String mRemoveAssetTextString;
 
-    @BindDrawable(R.drawable.ic_favorite_border_white_24dp) Drawable mFavoriteBorderDrawable;
-    @BindDrawable(R.drawable.ic_favorite_white_24dp) Drawable mFavoriteDrawable;
+    @BindDrawable(R.drawable.ic_favorite_border_white_24dp)
+    Drawable mFavoriteBorderDrawable;
+    @BindDrawable(R.drawable.ic_favorite_white_24dp)
+    Drawable mFavoriteDrawable;
+    private boolean mAssetLoaded = false;
     private boolean mIsInPortfolio = false;
     private boolean mIsOnWatchlist = false;
-
-    private Asset mAsset;
 
     private Unbinder mUnbinder;
 
     public AssetDetailFragment() {}
-    public static Fragment newInstance(Asset asset) {
+    public static Fragment newInstance(@NonNull Asset asset) {
         Fragment fragment = new AssetDetailFragment();
 
         Bundle args = new Bundle();
@@ -75,35 +86,35 @@ public class AssetDetailFragment extends BaseFragment implements AssetDetailCont
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity = (MainActivity) getActivity();
 
         Bundle bundle = this.getArguments();
-        if(bundle != null) {
-            mAsset = bundle.getParcelable(Constants.EXTRA_ASSET);
-            mActivity.setTitle(mAsset.getName());
+        if (bundle != null) {
+            Asset asset = bundle.getParcelable(Constants.EXTRA_ASSET);
+            if (asset != null) {
+                mActivity.setTitle(asset.getName());
+            }
+            mPresenter.setAsset(asset);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_asset_detail, container, false);
 
         mUnbinder = ButterKnife.bind(this, view);
 
         setHasOptionsMenu(true);
 
-        mAssetRecyclerViewAdapter = new AssetRecyclerViewAdapter(mAsset, mOnClickListener, mOnTabSelectedListener);
+        mAssetRecyclerViewAdapter.setOnClickListener(mOnClickListener);
+        mAssetRecyclerViewAdapter.setOnTabSelectedListener(mOnTabSelectedListener);
+
+        mLinearLayoutManager = new LinearLayoutManager(getContext());
 
         mAssetRecyclerView.setAdapter(mAssetRecyclerViewAdapter);
-        mLinearLayoutManager = new LinearLayoutManager(view.getContext());
         mAssetRecyclerView.setLayoutManager(mLinearLayoutManager);
         ((SimpleItemAnimator) mAssetRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        mAssetRecyclerView.addOnScrollListener(mOnScrollListener);
 
-        showAsset(mAsset);
-
-        mPresenter = new AssetDetailPresenter(this);
-        mPresenter.start(mAsset.getId());
+        mPresenter.setView(this);
 
         return view;
     }
@@ -116,14 +127,18 @@ public class AssetDetailFragment extends BaseFragment implements AssetDetailCont
 
     @Override
     public void onDestroyView() {
-        mPresenter.destroy();
-        mUnbinder.unbind();
         super.onDestroyView();
+        mPresenter.destroy();
+
+        mAssetRecyclerViewAdapter.setOnClickListener(null);
+        mAssetRecyclerViewAdapter.setOnTabSelectedListener(null);
+
+        mUnbinder.unbind();
     }
 
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem watchlistActionItem = menu.findItem(R.id.action_favorite);
-        if(mIsInPortfolio) {
+        if (!mAssetLoaded || mIsInPortfolio) {
             watchlistActionItem.setVisible(false);
         } else {
             watchlistActionItem.setVisible(true);
@@ -135,23 +150,22 @@ public class AssetDetailFragment extends BaseFragment implements AssetDetailCont
         }
         super.onPrepareOptionsMenu(menu);
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_options_portfolio_detail, menu);
+        inflater.inflate(R.menu.menu_options_asset_detail, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_favorite:
-                if(mIsOnWatchlist) {
-                    mIsOnWatchlist = false;
-                    mPresenter.removeAssetFromWatchlist(mAsset.getId());
+                if (mIsOnWatchlist) {
+                    mPresenter.removeAssetFromWatchlist();
                 } else {
-                    mIsOnWatchlist = true;
-                    mPresenter.addAssetToWatchlist(mAsset);
+                    mPresenter.addAssetToWatchlist();
                 }
-                mActivity.invalidateOptionsMenu();
                 return true;
             default:
                 return false;
@@ -160,80 +174,71 @@ public class AssetDetailFragment extends BaseFragment implements AssetDetailCont
 
     @Override
     public boolean onBackPressed() {
-        getFragmentManager().popBackStackImmediate();
+        mFragmentManager.popBackStack();
         return true;
     }
 
-    public void showAsset(Asset asset) {
-        mAsset = asset;
+    public void showAsset(@NonNull Asset asset) {
+        mActivity.setTitle(asset.getName());
+        if (asset instanceof PortfolioAsset) {
+            mIsInPortfolio = true;
+        }
         mAssetRecyclerViewAdapter.setAsset(asset);
         mAssetRecyclerView.setVisibility(View.VISIBLE);
     }
+
     public void showAssetInPortfolio(boolean isInPortfolio) {
+        mAssetLoaded = true;
         mIsInPortfolio = isInPortfolio;
         mActivity.invalidateOptionsMenu();
     }
     public void showAssetOnWatchlist(boolean isOnWatchlist) {
+        mAssetLoaded = true;
         mIsOnWatchlist = isOnWatchlist;
         mActivity.invalidateOptionsMenu();
     }
 
-    public void removePortfolioAsset() {
-        mPresenter.removeAssetFromPortfolio(mAsset.getId());
+    public void openEditPortfolioAssetUI(@NonNull Asset asset) {
+        DialogFragment editBalanceFragment = EditBalanceDialogFragment.newInstance(asset);
+        editBalanceFragment.setTargetFragment(this, TARGET_EDIT);
+        editBalanceFragment.show(mFragmentManager, TAG);
     }
 
-    public void openEditPortfolioAssetUI() {
-        Fragment editBalanceFragment = EditBalanceDialogFragment.newInstance(mAsset);
-        editBalanceFragment.setTargetFragment(this, TARGET_EDIT_ADD);
-        getFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .add(editBalanceFragment, TAG)
-                .commit();
-    }
-    public void openAddPortfolioAssetUI() {
-        Fragment editBalanceFragment = EditBalanceDialogFragment.newInstance(mAsset);
-        editBalanceFragment.setTargetFragment(this, TARGET_EDIT_ADD);
-        getFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .add(editBalanceFragment, TAG)
-                .commit();
+    public void openAddPortfolioAssetUI(@NonNull Asset asset) {
+        DialogFragment editBalanceFragment = EditBalanceDialogFragment.newInstance(asset);
+        editBalanceFragment.setTargetFragment(this, TARGET_ADD);
+        editBalanceFragment.show(mFragmentManager, TAG);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
-            case TARGET_EDIT_ADD:
-                if(resultCode == Activity.RESULT_OK) {
-                    PortfolioAsset portfolioAsset = data.getParcelableExtra(Constants.EXTRA_ASSET);
-                    mAsset = portfolioAsset;
-                    showAssetInPortfolio(true);
-                    showAsset(mAsset);
-                    mPresenter.addAssetToPortfolio(portfolioAsset, portfolioAsset.getBalance());
+        switch (requestCode) {
+            case TARGET_ADD:
+                if (resultCode == Activity.RESULT_OK) {
+                    double balance = data.getDoubleExtra(Constants.EXTRA_ASSET_BALANCE, -1);
+                    mPresenter.addAssetToPortfolio(balance);
+                }
+                break;
+            case TARGET_EDIT:
+                if (resultCode == Activity.RESULT_OK) {
+                    double balance = data.getDoubleExtra(Constants.EXTRA_ASSET_BALANCE, -1);
+                    mPresenter.editAssetBalance(balance);
                 }
                 break;
         }
     }
 
-    private void showRemoveAssetDialog() {
+    public void openRemovePortfolioAssetUI() {
         int[] attrs = {android.R.attr.alertDialogTheme};
-        TypedArray styles = App.getAppContext().obtainStyledAttributes(App.getApp().getAppTheme(), attrs);
+        TypedArray styles = mActivity.getApplication().obtainStyledAttributes(mPreferences.getAppThemeStyleAttr(), attrs);
         int alertDialogTheme = styles.getResourceId(0, R.style.CoinnectionTheme_Light_Dialog_Alert);
         styles.recycle();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, alertDialogTheme);
 
         builder.setMessage(mRemoveAssetTextString)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        removePortfolioAsset();
-                        mPresenter.removeAssetFromPortfolio(mAsset.getId());
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                })
+                .setPositiveButton(R.string.yes, (dialog, id) -> mPresenter.removeAssetFromPortfolio())
+                .setNegativeButton(R.string.no, (dialog, id) -> {})
                 .setCancelable(true)
                 .show();
     }
@@ -245,7 +250,7 @@ public class AssetDetailFragment extends BaseFragment implements AssetDetailCont
             int pastVisibleItems = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
             if (pastVisibleItems == 0) {
                 mActivity.setActionBarElevation(0);
-            } else if(pastVisibleItems > 0) {
+            } else if (pastVisibleItems > 0) {
                 mActivity.setActionBarElevation(4);
             }
         }
@@ -254,23 +259,24 @@ public class AssetDetailFragment extends BaseFragment implements AssetDetailCont
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(mAsset instanceof PortfolioAsset) {
+            if (mIsInPortfolio) {
                 if (view.getId() == R.id.edit_add_asset_button) {
-                    openEditPortfolioAssetUI();
+                    mPresenter.onEditPortfolioAssetClicked();
                 } else if (view.getId() == R.id.remove_asset_button) {
-                    showRemoveAssetDialog();
+                    mPresenter.onRemoveAssetFromPortfolioClicked();
                 }
             } else {
                 if (view.getId() == R.id.edit_add_asset_button) {
-                    openAddPortfolioAssetUI();
+                    mPresenter.onAddAssetToPortfolioClicked();
                 }
             }
         }
     };
-    
+
     private TabLayout.OnTabSelectedListener mOnTabSelectedListener = new TabLayout.OnTabSelectedListener() {
-        @Override public void onTabSelected(TabLayout.Tab tab) {
-            switch(tab.getPosition()) {
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            switch (tab.getPosition()) {
                 case 0:
                     mAssetRecyclerViewAdapter.setTimeframe(Constants.TIMEFRAME_HOUR);
                     break;

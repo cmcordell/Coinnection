@@ -8,13 +8,9 @@ public interface PreferencesRepository {
     String getAppTheme();
     void setAppTheme(String appTheme);
 
-    int getDataRefresh();
-    void setDataRefresh(String dataRefresh);
+    boolean getIsFirstRun();
+    void setIsFirstRun(boolean isFirstRun);
 
-    boolean isFirstRun();
-    void finishFirstRun();
-
-    boolean needsFullUpdate();
     long getLastFullUpdate();
     void setLastFullUpdate(long timeInMilliseconds);
 }

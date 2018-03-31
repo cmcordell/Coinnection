@@ -47,6 +47,7 @@ public class GlobalMarketData {
     public String getId() {
         return id;
     }
+
     public void setId(@NonNull String id) {
         this.id = id;
     }
@@ -54,6 +55,7 @@ public class GlobalMarketData {
     public double getTotalMarketCap() {
         return totalMarketCap;
     }
+
     public void setTotalMarketCap(double totalMarketCap) {
         this.totalMarketCap = totalMarketCap;
     }
@@ -61,6 +63,7 @@ public class GlobalMarketData {
     public double getTotalVolume24hour() {
         return totalVolume24hour;
     }
+
     public void setTotalVolume24hour(double totalVolume24hour) {
         this.totalVolume24hour = totalVolume24hour;
     }
@@ -68,6 +71,7 @@ public class GlobalMarketData {
     public double getBitcoinPercentageOfMarketCap() {
         return bitcoinPercentageOfMarketCap;
     }
+
     public void setBitcoinPercentageOfMarketCap(double percentOfMarketCapBitcoin) {
         this.bitcoinPercentageOfMarketCap = percentOfMarketCapBitcoin;
         this.altcoinPercentageOfMarketCap = 100.0 - percentOfMarketCapBitcoin;
@@ -76,6 +80,7 @@ public class GlobalMarketData {
     public double getAltcoinPercentageOfMarketCap() {
         return altcoinPercentageOfMarketCap;
     }
+
     public void setAltcoinPercentageOfMarketCap(double percentOfMarketCapAlts) {
         this.altcoinPercentageOfMarketCap = percentOfMarketCapAlts;
     }
@@ -83,6 +88,7 @@ public class GlobalMarketData {
     public int getActiveCurrencies() {
         return activeCurrencies;
     }
+
     public void setActiveCurrencies(int activeCurrencies) {
         this.activeCurrencies = activeCurrencies;
     }
@@ -90,6 +96,7 @@ public class GlobalMarketData {
     public int getActiveAssets() {
         return activeAssets;
     }
+
     public void setActiveAssets(int activeAssets) {
         this.activeAssets = activeAssets;
     }
@@ -97,6 +104,7 @@ public class GlobalMarketData {
     public int getActiveMarkets() {
         return activeMarkets;
     }
+
     public void setActiveMarkets(int activeMarkets) {
         this.activeMarkets = activeMarkets;
     }
@@ -104,6 +112,7 @@ public class GlobalMarketData {
     public long getLastUpdated() {
         return lastUpdated;
     }
+
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }

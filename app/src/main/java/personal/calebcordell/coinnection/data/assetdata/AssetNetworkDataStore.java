@@ -1,79 +1,60 @@
 package personal.calebcordell.coinnection.data.assetdata;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import io.reactivex.Flowable;
-import personal.calebcordell.coinnection.presentation.App;
-
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import android.util.Pair;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Cache;
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import personal.calebcordell.coinnection.data.assetpairdata.AssetPairDiskDataStore;
+import personal.calebcordell.coinnection.data.assetpairdata.AssetPairEntity;
+import personal.calebcordell.coinnection.data.assetpairdata.AssetPairMapper;
+import personal.calebcordell.coinnection.data.portfolioassetdata.PortfolioAssetDiskDataStore;
+import personal.calebcordell.coinnection.data.watchlistassetdata.WatchlistAssetDiskDataStore;
+import personal.calebcordell.coinnection.presentation.Constants;
+import personal.calebcordell.coinnection.presentation.Preferences;
 
 
 /**
  * Uses Retrofit to get data from CoinMarketCap.com
  */
+@Singleton
 public class AssetNetworkDataStore {
     private static final String TAG = AssetNetworkDataStore.class.getSimpleName();
-    private static final String ASSET_BASE_URL = "https://api.coinmarketcap.com/v1/";
 
-    private static final int CACHE_SIZE = 1 * 1024 * 1024; //1MB
+    private AssetService mAssetService;
+    private Preferences mPreferences;
 
-    private static AssetNetworkDataStore INSTANCE;
+    private AssetDiskDataStore mAssetDiskDataStore;
+    private PortfolioAssetDiskDataStore mPortfolioAssetDiskDataStore;
+    private WatchlistAssetDiskDataStore mWatchlistAssetDiskDataStore;
+    private AssetPairDiskDataStore mAssetPairDiskDataStore;
 
-    //TODO Remove
-    private int networkCalls = 0;
-    private long startTime = System.currentTimeMillis();
-    //--------------------
 
-    private AssetNetworkDataStore() {}
+    @Inject
+    public AssetNetworkDataStore(AssetService assetService,
+                                 Preferences preferences,
+                                 AssetDiskDataStore assetDiskDataStore,
+                                 PortfolioAssetDiskDataStore portfolioAssetDiskDataStore,
+                                 WatchlistAssetDiskDataStore watchlistAssetDiskDataStore,
+                                 AssetPairDiskDataStore assetPairDiskDataStore) {
+        mAssetService = assetService;
+        mPreferences = preferences;
 
-    public static AssetNetworkDataStore getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new AssetNetworkDataStore();
-        }
-        return INSTANCE;
-    }
-
-    private AssetService getAssetService(final int timeout, @NonNull final TimeUnit timeUnit) {
-        final Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(timeout, timeUnit)
-                .readTimeout(timeout, timeUnit)
-                .cache(new Cache(App.getAppContext().getCacheDir(), CACHE_SIZE))
-                .build();
-
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ASSET_BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(okHttpClient)
-                .build();
-
-        return retrofit.create(AssetService.class);
+        mAssetDiskDataStore = assetDiskDataStore;
+        mPortfolioAssetDiskDataStore = portfolioAssetDiskDataStore;
+        mWatchlistAssetDiskDataStore = watchlistAssetDiskDataStore;
+        mAssetPairDiskDataStore = assetPairDiskDataStore;
     }
 
     public Single<List<AssetEntity>> assets() {
-        networkCalls++;
-        double upTime = (System.currentTimeMillis() - startTime) / 60000.0;
-        Log.d(TAG, "Network Calls: " + networkCalls + ";  Up Time: " + String.format("%.2f", upTime) + "min");
-        return getAssetService(120, TimeUnit.SECONDS)
-                .assets(App.getApp().getCurrencyCode(), 10000)
+        return mAssetService
+                .assets(mPreferences.getCurrencyCode(), 0)
                 .subscribeOn(Schedulers.io());
     }
 
@@ -81,15 +62,41 @@ public class AssetNetworkDataStore {
         return Flowable.fromIterable(ids)
                 .subscribeOn(Schedulers.io())
                 .flatMapSingle(this::asset)
+                .filter(assetEntity -> !assetEntity.getId().equals(""))
+                .toList();
+    }
+
+    public Single<List<AssetPairEntity>> assetPairs(@NonNull final List<Pair<String, String>> argumentsList) {
+        return Flowable.fromIterable(argumentsList)
+                .subscribeOn(Schedulers.io())
+                .flatMapSingle(this::assetPair)
+                .filter(assetPairEntity -> !assetPairEntity.getId().equals(""))
                 .toList();
     }
 
     public Single<AssetEntity> asset(@NonNull final String id) {
-        networkCalls++;
-        double upTime = (System.currentTimeMillis() - startTime) / 60000.0;
-        Log.d(TAG, "Asset: " + id + ";  Network Calls: " + networkCalls + ";  Up Time: " + String.format("%.2f", upTime) + "min");
-        return getAssetService(20, TimeUnit.SECONDS).asset(id, App.getApp().getCurrencyCode())
+        return mAssetService
+                .asset(id, mPreferences.getCurrencyCode())
                 .subscribeOn(Schedulers.io())
-                .flatMap(assetEntities -> Single.just(assetEntities.get(0)));
+                .flatMap(assetEntities -> Single.just(assetEntities.get(0)))
+                .doOnError((error) -> {
+                    if (error.getMessage().equals(Constants.COIN_DOES_NOT_EXIST_MESSAGE)) {
+                        mAssetDiskDataStore.removeSingular(id).subscribeOn(Schedulers.single()).subscribe();
+                        mPortfolioAssetDiskDataStore.removeSingular(id).subscribeOn(Schedulers.single()).subscribe();
+                        mWatchlistAssetDiskDataStore.removeSingular(id).subscribeOn(Schedulers.single()).subscribe();
+                    }
+                });
+    }
+
+    public Single<AssetPairEntity> assetPair(@NonNull final Pair<String, String> arguments) {
+        return mAssetService
+                .asset(arguments.first, arguments.second)
+                .subscribeOn(Schedulers.io())
+                .flatMap(assetEntities -> Single.just(assetEntities.get(0)).map(assetEntity -> AssetPairMapper.map(assetEntity, arguments.second)))
+                .doOnError((error) -> {
+                    if (error.getMessage().equals(Constants.COIN_DOES_NOT_EXIST_MESSAGE)) {
+                        mAssetPairDiskDataStore.removeSingular(arguments.first, arguments.second).subscribeOn(Schedulers.single()).subscribe();
+                    }
+                });
     }
 }

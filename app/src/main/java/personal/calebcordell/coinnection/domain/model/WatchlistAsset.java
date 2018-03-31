@@ -8,6 +8,7 @@ public class WatchlistAsset extends Asset {
     public WatchlistAsset() {
 
     }
+
     public WatchlistAsset(Asset asset) {
         super(asset);
         position = -1;
@@ -17,6 +18,7 @@ public class WatchlistAsset extends Asset {
     public int getPosition() {
         return position;
     }
+
     public void setPosition(int position) {
         this.position = position;
     }

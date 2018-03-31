@@ -1,21 +1,35 @@
 package personal.calebcordell.coinnection.presentation.views.assetdetailtab;
 
+import android.support.annotation.NonNull;
+
 import personal.calebcordell.coinnection.domain.model.Asset;
+import personal.calebcordell.coinnection.presentation.views.base.BasePresenter;
 
 
 interface AssetDetailTabContract {
     interface View {
-        void showAsset(Asset asset);
+        void showAsset(@NonNull Asset asset);
+
+        void openEditPortfolioAssetUI(@NonNull Asset asset);
+
+        void openAddPortfolioAssetUI(@NonNull Asset asset);
+
+        void openRemovePortfolioAssetUI();
     }
 
-    interface Presenter {
-        void start(String assetId);
+    abstract class Presenter extends BasePresenter<AssetDetailTabContract.View> {
+        abstract void setAsset(@NonNull Asset asset);
 
-        void addAssetToPortfolio(Asset asset, double balance);
-        void removeAssetFromPortfolio(String assetId);
+        abstract void onEditPortfolioAssetClicked();
 
-        void fragmentBecameInvisible();
+        abstract void onAddAssetToPortfolioClicked();
 
-        void destroy();
+        abstract void onRemoveAssetFromPortfolioClicked();
+
+        abstract void editAssetBalance(double balance);
+
+        abstract void addAssetToPortfolio(double balance);
+
+        abstract void removeAssetFromPortfolio();
     }
 }
